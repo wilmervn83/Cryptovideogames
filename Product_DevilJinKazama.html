@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <title>Devil Jin Kazama</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="shortcut icon" type="image/icon" href="images/favicon.ico"> <link rel="icon" href="images/favicon.ico" type="image/icon">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script language="javascript" type="text/javascript" src="dist1/web3.min.js"></script>
+    <script language="javascript" type="text/javascript" src="DappProduct.js"></script>
+  <style>
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+      background-color: black;
+      font-size: 20px;
+      padding-bottom: 0;
+    
+    }
+       #buttonget {
+            display: none;
+        }
+      .container {
+          margin-top: 100px;
+          margin-bottom: 100px;
+      }
+       
+      .well {
+          background: white;
+          width: 600px;
+          height: 400px;
+          border-radius: 16px 16px 16px 16px;
+      }
+      
+    
+    /* Add a gray background color and some padding to the footer */
+    footer {
+      background-color: #663399;
+      padding: 25px;
+      color: white;
+        font-size: 18px;
+    }
+      
+      body {
+           background-color: black;
+           font-family: sans-serif;
+      }
+   
+
+form.example input[type=text] {
+    padding: 10px;
+    font-size: 17px;
+    border: 1px solid grey;
+    float: left;
+    width: 80%;
+    background: #f1f1f1;
+}
+
+form.example button {
+    float: left;
+    width: 20%;
+    padding: 10px;
+    background: #2196F3;
+    color: white;
+    font-size: 17px;
+    border: 1px solid grey;
+    border-left: none;
+    cursor: pointer;
+}
+
+form.example button:hover {
+    background: #0b7dda;
+}
+
+form.example::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+  </style>
+    <style>
+     
+.card {
+  background: #FFFF00;  
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  margin: auto;
+  text-align: center;
+  font-family: arial;
+  height: 516px;
+  border-radius: 16px;
+}
+
+.price {
+  color: grey;
+  font-size: 22px;
+}
+
+.card button {
+  border: none;
+  outline: 0;
+  padding: 12px;
+  color: white;
+  background-color: #663399;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+  border-radius: 0 0 16px 16px;
+  margin: auto;
+  
+}
+         .purchase {
+             text-align: center;
+             margin-bottom: -35px;
+         }
+        .purchase button {
+             border: none;
+             background-color: #663399;
+             color: white;
+             border-radius: 10px 10px 10px 10px;
+             padding: 6px;
+             width: 130px;
+            height: 40px;
+        }
+        .purchase button:hover {
+       background-color: #8A2BE2;
+    
+}
+
+.card button:hover {
+ background-color: #8A2BE2;
+}
+         .card img {
+    border-radius: 16px 16px 8px 8px;
+    cursor: pointer;
+        }
+        .fa {
+    text-decoration: none;
+    font-size: 30px;
+    color: white;
+}
+          .card:hover {
+            box-shadow: 5px 20px 8px 0 rgba(255,255,252,1);
+            -moz-transform:scale(1.03); /*scale up image 1.03x*/
+            -webkit-transform:scale(1.03);
+            -o-transform:scale(1.03);
+            border: solid black 1px;}
+        
+        
+ 
+
+    input[type=text] {
+    float: left;
+    padding: 6px;
+    border: none;
+    margin-top: 8px;
+    margin-right: 16px;
+    font-size: 17px;
+    width: 150px;
+        
+} 
+        ul button {
+            float: left;
+             margin-top: 8px;
+             margin-left: -16px;
+            background: black;
+            
+        }
+</style>
+    <style>
+
+
+         img {
+             
+    border-radius: 16px 16px 16px 16px;
+             cursor: pointer;
+  
+         }
+        ul {
+             padding: 20px;
+             font-size: 25px;
+         }
+
+        iframe {
+           display: block;
+            margin: auto;
+        }
+        
+        .marcas {
+            display: block;
+            text-align: center;
+            
+        }
+        
+        .marcas li {
+            display: inline-block;
+            
+        }
+        
+        .marcas li img {
+            margin-right: 50px;
+            
+        }
+        
+        .col-sm-6 {
+            float: right;
+        }
+         #cuenta {
+           
+           border: solid 1px grey;
+           color: white;
+              border-radius: 10px 10px 10px 10px;
+             font-size: 15px;
+           
+       }
+       
+         .inputField {
+            width: 55px;
+             margin-right: 20px;
+        }
+        #priceCard93 {
+             
+             font-size: 11px;
+             margin-left: -95px;
+            
+         }
+         #ownerCard93 {
+             float: left;
+             font-size: 11px;
+             margin-left: 5px;
+            
+         }
+        #nextpriceCard93 {
+            float: right;
+             font-size: 11px;
+             margin-right: 5px;
+           
+             
+         }
+        hr {
+             border: solid #EAECEE 1px;
+        }
+       
+                  
+</style>
+     <style>
+#balance {
+    background-color: palegreen;
+    padding: 5px;
+    display: none;
+    color: black;
+    font-size: 15px;
+    width: 200px;
+     border-radius: 10px 10px 10px 10px;
+}
+    
+#cuenta:hover + #balance {
+    display: block;
+}
+         .sociales {
+            float: right;
+            margin-right: 50px;
+              margin-top: 18px;
+        }
+          .listfooter  {
+             font-size: 17px;
+             margin-left: 50px;
+            
+             
+         }
+         .listfooter1 {
+             font-size: 17px;
+             margin-left: 300px;
+            
+         }
+         .listfooter {
+             float: left;
+         }
+         
+          .listfooter li a:hover,.listfooter1 a:hover  {
+             color: greenyellow;
+              cursor: pointer;
+         }
+         
+         
+         .listfooter li a,.listfooter1 a {
+             color: white;
+         }
+</style>
+     <style>
+.alert {
+    padding: 10px;
+    background-color: #ffdddd;
+    color: black;
+    margin-bottom: 15px;
+    height: 40px;
+     border-left: 6px solid #f44336;
+    border-radius: 16px 16px 16px 16px;
+}
+
+.alert.success {background-color:  #ddffdd; border-left: 6px solid #4CAF50; height: 90px;}
+.alert.info {background-color: #e7f3fe; border-left: 6px solid #2196F3;}
+.alert.warning {background-color: #FCE6A7 ; border-left: 6px solid #ff9800;  height: 60px;  padding: 17px;}
+
+.closebtn {
+    margin-left: 15px;
+    color: black;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.closebtn:hover {
+    color: lightgray;
+}
+</style>
+     <script type="text/javascript">
+         //aquiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+          function Get() {
+            $('#buttonget').click();
+               $("#buttonget").hide();
+               $("#log").hide();
+               $("#cuenta").hide();
+              
+          }
+         
+         document.addEventListener("DOMContentLoaded", Get, false);
+         
+       </script>
+
+</head>
+<body>
+    
+    
+      <!-- Devil Jin Kazama -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Devil Jin Kazama</h4>
+             <br/>
+            <div id="price93"></div>
+             <br/>
+            <div id="nextprice93"></div>
+        </div>
+        <div class="modal-body">
+         <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+             <div class="purchase"> 
+            <input placeholder='price' id='priceOf' class='inputField'>
+      <button id="button" class="button" onclick="purchase93()">Buy This Contract</button>
+                  <br/>
+             <br/>
+            <div id='status93' ></div>
+                  </div>
+           <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+        <a href="home.html"><img id="logo" src="images/logo%20proyecto.png"></a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+          <li class=""><a href="home.html">Home</a></li>
+        <li><a href="Marketplace.html">MarketPlace</a></li>
+        <li><a href="MyCards.html">My Cards</a></li>
+                </ul>
+      <ul class="nav navbar-nav navbar-right">
+            <div id="cuenta"></div>
+           <div id="balance"></div>
+          
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+    
+     <div id='log'></div>
+          
+    <div class="container">
+
+     <br>
+        <div class="row">
+  <div class="col-sm-5">
+      
+
+<div class="card">
+  <a href="Product_DevilJinKazama.html" class="product"><img src="images/devil%20jin%20kazama.png" alt="Devil Jin Kazama" style="width:100%" ></a>
+  <h2>Devil Jin Kazama</h2>
+     <div id="nextpriceCard93"></div>
+  <div id="priceCard93"></div><br/>
+  <div id="ownerCard93"></div>
+  
+   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Buy This Contract</button>
+</div>
+    </div>
+            <div class="col-sm-7">
+    <P style= "color:gold;  font-size: 35px">DEVIL JIN KAZAMA</P>
+    <div class="well">
+      <h3>Contract Details</h3>
+        <hr/>
+        <p><b>TokenID:</b> #93</p>
+        <br/>
+         <hr/>
+        <div id="priceWell"></div>
+         <br/>
+         <hr/>
+        <div id="nextpriceWell"></div>
+        <br/>
+         <hr/>
+        <div id="owner"></div>
+     <button id="buttonget" class="button" onclick="getToken93 ()">GetGame</button>
+    </div>
+  </div>
+    </div>
+
+ </div>
+        
+       
+
+<footer class="container-fluid">
+    
+     <div class="sociales"> 
+        <p style="color: white"><b>Socials</b></p>
+ 
+  <a href="https://twitter.com/cryptovideogam1"><i class="fa fa-twitter" style="font-size:50px"></i></a> 
+  <a href="https://www.instagram.com/cryptovideogames/"><i class="fa fa-instagram" style="font-size:50px"></i></a> 
+  <a href="https://www.facebook.com/cryptovideogames.dapp"><i class="fa fa-facebook" style="font-size:50px"></i></a> 
+     </div>
+    
+       <ul class="listfooter">
+        <p style="color: white"><b>About</b></p>
+    <li><a href="How_to_Work.html">How to work</a> </li>
+    <li><a href="FAQ.html">FAQ</a> </li>
+    <li><a href="Terms_of_Service.html">Terms of Service</a> </li>
+    <li><a href="Privacy_Policy.html">Privacy Policy</a> </li>
+    </ul>
+    <ul class="listfooter1">
+        <p style="color: white"><b>Game</b></p>
+    <li><a href="home.html">Home</a> </li>
+    <li><a href="Marketplace.html">MarketPlace</a> </li>
+    <li><a href="MyCards.html">My Cards</a> </li>
+     <li><a href="https://etherscan.io/address/0xfb2397daa1851ba306cee0bcad859959f63aa4f3">Contract</a></li>
+    </ul>
+
+    <ul class="marcas">
+    <li><a href="https://metamask.io/"><img src="images/metamask.png"></a></li>
+    <li><img src="images/powered_by_ethereum.png"></li>
+    </ul>
+     <p style="text-align:center">Copyright © 2018 CryptoVideoGames</p>
+    </footer>
+</body>
+</html>

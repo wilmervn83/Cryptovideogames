@@ -1,0 +1,4603 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Cards</title>
+  <link rel="shortcut icon" type="image/icon" href="images/favicon.ico"><link rel="icon" href="images/favicon.ico" type="image/icon">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+     <script language="javascript" type="text/javascript" src="dist1/web3.min.js"></script>
+       <script language="javascript" type="text/javascript" src="Dappmycard.js"></script>
+     <script type="text/javascript" async >
+          
+            window.addEventListener('load', async () => {
+    // Modern dapp browsers...
+    if (window.ethereum) {
+        window.web3 = new Web3(ethereum);
+        try {
+            // Request account access if needed
+            await ethereum.enable();
+            // Acccounts now exposed
+            web3.eth.sendTransaction({/* ... */});
+        } catch (error) {
+            // User denied account access...
+        }
+    }
+    // Legacy dapp browsers...
+    else if (window.web3) {
+        window.web3 = new Web3(web3.currentProvider);
+        // Acccounts always exposed
+        web3.eth.sendTransaction({/* ... */});
+    }
+    // Non-dapp browsers...
+    else {
+          // set the provider you want from Web3.providers
+        window.web3 = new Web3(new Web3.providers.HttpProvider("https://mainnet.infura.io/v3/0947de0454e841beb9c31d13eb4ee770"));
+      $("#metamask").hide();
+             console.log('Non-Ethereum browser detected. You should consider trying MetaMask!');
+             document.getElementById("metamaskInstall").innerHTML = `<div class="alert warning">
+   <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>  
+  <strong>Please!</strong> Install the Metamask wallet to access this game.
+</div>`;         
+
+       
+    }
+});
+       </script>
+    
+    <style>
+         /* Center the loader */
+#loader {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  width: 150px;
+  height: 150px;
+  margin: -75px 0 0 -75px;
+  border: 12px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 12px solid #663399;
+  width: 80px;
+  height:80px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Add animation to "page content" */
+.animate-bottom {
+  position: relative;
+  -webkit-animation-name: animatebottom;
+  -webkit-animation-duration: 1s;
+  animation-name: animatebottom;
+  animation-duration: 1s
+}
+
+@-webkit-keyframes animatebottom {
+  from { bottom:-100px; opacity:0 } 
+  to { bottom:0px; opacity:1 }
+}
+
+@keyframes animatebottom { 
+  from{ bottom:-100px; opacity:0 } 
+  to{ bottom:0; opacity:1 }
+}
+
+#myDiv {
+  display: none;
+ 
+}
+         body {
+           background-color: black;
+           font-family: sans-serif;
+      }
+         .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+      background-color: black;
+      font-size: 20px;
+      padding-bottom: 0;;
+    }
+         .container {
+          margin-top: 100px;
+      }
+    .card {
+  background: #FFFF00;  
+  max-width: 300px;
+  text-align: center;
+  font-family: arial;
+  border-radius: 16px;
+  max-height: 492px;
+  float: left;
+  width: 260px;
+  margin: 12px 12px 12px 12px;
+  display: none;
+ 
+}
+        input[type=text] {
+    float: left;
+    padding: 6px;
+    margin-top: 8px;
+    margin-right: 16px;
+    font-size: 17px;
+    width: 150px;
+} 
+     /* Add a gray background color and some padding to the footer */
+    footer {
+      background-color: #663399;
+      padding: 25px;
+      color: white;
+      font-size: 18px;
+       margin
+    }
+        .price {
+  color: grey;
+  font-size: 22px;
+}
+
+.card button {
+  border: none;
+  outline: 0;
+  padding: 12px;
+  color: white;
+  background-color: #663399;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+  border-radius: 0 0 16px 16px;
+  margin: auto;
+  
+}
+         .purchase {
+             text-align: center;
+             margin-bottom: -35px;
+         }
+        .purchase button {
+             border: none;
+             background-color: #663399;
+             color: white;
+             border-radius: 10px 10px 10px 10px;
+             padding: 6px;
+            width: 130px;
+            height: 40px;
+        }
+        .purchase button:hover {
+       background-color: #8A2BE2;
+    
+}
+
+.card button:hover {
+ background-color: #8A2BE2;
+    
+}
+ .card img {
+    border-radius: 16px 16px 8px 8px;
+    cursor: pointer;
+        }
+        #myDIV {
+            
+            margin-top: 40px;
+        }
+         .fa {
+    text-decoration: none;
+    font-size: 30px;
+    color: white;
+}
+        .card:hover {
+            box-shadow: 0px 5px 8px 0 rgba(255,255,252,1);
+            -moz-transform:scale(1.03); /*scale up image 1.03x*/
+            -webkit-transform:scale(1.03);
+            -o-transform:scale(1.03);
+        }
+        .inputField {
+            width: 55px;
+            margin-right: 20px;
+        }
+         img {
+             
+    border-radius: 16px 16px 16px 16px;
+             cursor: pointer;
+  
+         }
+         ul {
+             padding: 20px;
+             font-size: 25px;
+         }
+            iframe {
+           display: block;
+            margin: auto;
+        }
+        
+        .marcas {
+            display: block;
+            text-align: center;
+            
+            
+        }
+        
+        .marcas li {
+            display: inline-block;
+            
+        }
+        
+        .marcas li img {
+            margin-right: 50px;
+            
+        }
+         
+         .w3-bar {
+             
+             color: white;
+         }
+          
+         #priceCard,#priceCard1,#priceCard2,#priceCard3,#priceCard4,#priceCard5,#priceCard6,#priceCard7,#priceCard8,#priceCard9,#priceCard10,#priceCard11,#ownerCard,#ownerCard1,#ownerCard2,#ownerCard3,#ownerCard4,#ownerCard5,#ownerCard6,#ownerCard7,#ownerCard8,#ownerCard9,#ownerCard10,#ownerCard11,#priceCard12,#priceCard13,#priceCard14,#priceCard15,#priceCard16,#priceCard17,#priceCard18,#priceCard19,#priceCard20,#priceCard21,#priceCard22,#priceCard23,#priceCard24,#priceCard25,#priceCard26,#priceCard27,#priceCard28,#priceCard29,#priceCard30,#priceCard31,#priceCard32,#priceCard33,#priceCard34,#priceCard35,#priceCard36,#priceCard37,#priceCard38,#priceCard39,#priceCard40,#priceCard41,#priceCard42,#priceCard43,#priceCard44,#priceCard45,#priceCard46,#priceCard47,#priceCard48,#priceCard49,#priceCard50,#priceCard51,#priceCard52,#priceCard53,#priceCard54,#priceCard55,#priceCard56,#priceCard57,#priceCard58,#priceCard59,#priceCard60,#priceCard61,#priceCard62,#priceCard63,#priceCard64,#priceCard65,#priceCard66,#priceCard67,#priceCard68,#priceCard69,#priceCard70,#priceCard71,#priceCard72,#priceCard73,#priceCard74,#priceCard75,#priceCard76,#priceCard77,#priceCard78,#priceCard79,#priceCard80,#priceCard81,#priceCard82,#priceCard83,#priceCard84,#priceCard85,#priceCard86,#priceCard87,#priceCard88,#priceCard89,#priceCard90,#priceCard91,#priceCard92,#priceCard93,#priceCard94,#priceCard95,#ownerCard12,#ownerCard13,#ownerCard14,#ownerCard15,#ownerCard16,#ownerCard17,#ownerCard18,#ownerCard19,#ownerCard20,#ownerCard21,#ownerCard22,#ownerCard23,#ownerCard24,#ownerCard25,#ownerCard26,#ownerCard27,#ownerCard28,#ownerCard29,#ownerCard30,#ownerCard31,#ownerCard32,#ownerCard33,#ownerCard34,#ownerCard35,#ownerCard36,#ownerCard37,#ownerCard38,#ownerCard39,#ownerCard40,#ownerCard41,#ownerCard42,#ownerCard43,#ownerCard44,#ownerCard45,#ownerCard46,#ownerCard47,#ownerCard48,#ownerCard49,#ownerCard50,#ownerCard51,#ownerCard52,#ownerCard53,#ownerCard54,#ownerCard55,#ownerCard56,#ownerCard57,#ownerCard58,#ownerCard59,#ownerCard60,#ownerCard61,#ownerCard62,#ownerCard63,#ownerCard64,#ownerCard65,#ownerCard66,#ownerCard67,#ownerCard68,#ownerCard69,#ownerCard70,#ownerCard71,#ownerCard72,#ownerCard73,#ownerCard74,#ownerCard75,#ownerCard76,#ownerCard77,#ownerCard78,#ownerCard79,#ownerCard80,#ownerCard81,#ownerCard82,#ownerCard83,#ownerCard84,#ownerCard85,#ownerCard86,#ownerCard87,#ownerCard88,#ownerCard89,#ownerCard90,#ownerCard91,#ownerCard92,#ownerCard93,#ownerCard94,#ownerCard95 {
+             float: left;
+             font-size: 11px;
+             margin-left: 5px;
+         }
+         #nextpriceCard,#nextpriceCard1,#nextpriceCard2,#nextpriceCard3,#nextpriceCard4,#nextpriceCard5,#nextpriceCard6,#nextpriceCard7,#nextpriceCard8,#nextpriceCard9,#nextpriceCard10,#nextpriceCard11,#nextpriceCard12,#nextpriceCard13,#nextpriceCard14,#nextpriceCard15,#nextpriceCard16,#nextpriceCard17,#nextpriceCard18,#nextpriceCard19,#nextpriceCard20,#nextpriceCard21,#nextpriceCard22,#nextpriceCard23,#nextpriceCard24,#nextpriceCard25,#nextpriceCard26,#nextpriceCard27,#nextpriceCard28,#nextpriceCard29,#nextpriceCard30,#nextpriceCard31,#nextpriceCard32,#nextpriceCard33,#nextpriceCard34,#nextpriceCard35,#nextpriceCard36,#nextpriceCard37,#nextpriceCard38,#nextpriceCard39,#nextpriceCard40,#nextpriceCard41,#nextpriceCard42,#nextpriceCard43,#nextpriceCard44,#nextpriceCard45,#nextpriceCard46,#nextpriceCard47,#nextpriceCard48,#nextpriceCard49,#nextpriceCard50,#nextpriceCard51,#nextpriceCard52,#nextpriceCard53,#nextpriceCard54,#nextpriceCard55,#nextpriceCard56,#nextpriceCard57,#nextpriceCard58,#nextpriceCard59,#nextpriceCard60,#nextpriceCard61,#nextpriceCard62,#nextpriceCard63,#nextpriceCard64,#nextpriceCard65,#nextpriceCard66,#nextpriceCard67,#nextpriceCard68,#nextpriceCard69,#nextpriceCard70,#nextpriceCard71,#nextpriceCard72,#nextpriceCard73,#nextpriceCard74,#nextpriceCard75,#nextpriceCard76,#nextpriceCard77,#nextpriceCard78,#nextpriceCard79,#nextpriceCard80,#nextpriceCard81,#nextpriceCard82,#nextpriceCard83,#nextpriceCard84,#nextpriceCard85,#nextpriceCard86,#nextpriceCard87,#nextpriceCard88,#nextpriceCard89,#nextpriceCard90,#nextpriceCard91,#nextpriceCard92,#nextpriceCard93,#nextpriceCard94,#nextpriceCard95 {
+             float: right;
+             font-size: 11px;
+             margin-right: 5px;
+             
+         }
+         
+          #cuenta {
+           
+           border: solid 1px grey;
+		     border-left-width: 18px;
+             color: white;
+             border-radius: 10px 10px 10px 10px;
+             font-size: 15px;
+			 max-width: 370px;
+           
+       }
+        #balance {
+    background-color: palegreen;
+    padding: 5px;
+    display: none;
+    color: black;
+    font-size: 15px;
+    width: 200px;
+     border-radius: 10px 10px 10px 10px;
+}
+    
+#user:hover + #balance {
+    display: block;
+}
+		#user {
+			 border-radius: 10px 10px 10px 10px;
+			
+		}
+         
+          .sociales {
+            float: right;
+            margin-right: 50px;
+              margin-top: 18px;
+        }
+          .listfooter  {
+             font-size: 17px;
+             margin-left: 50px;
+            
+             
+         }
+         .listfooter1 {
+             font-size: 17px;
+             margin-left: 300px;
+            
+         }
+         .listfooter {
+             float: left;
+         }
+         
+          .listfooter li a:hover,.listfooter1 a:hover  {
+             color: greenyellow;
+              cursor: pointer;
+         }
+         
+         
+         .listfooter li a,.listfooter1 a {
+             color: white;
+         }
+        .alert {
+    padding: 10px;
+    background-color: #ffdddd;
+    color: black;
+    margin-bottom: 15px;
+    height: 40px;
+     border-left: 6px solid #f44336;
+    border-radius: 6px 6px 6px 6px;
+}
+
+.alert.success {background-color:  #ddffdd; border-left: 6px solid #4CAF50; height: 90px;}
+.alert.info {background-color: #e7f3fe; border-left: 6px solid #2196F3;}
+.alert.warning {background-color: #FCE6A7 ; border-left: 6px solid #ff9800; text-align: center;}
+
+.closebtn {
+    margin-left: 15px;
+    color: black;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.closebtn:hover {
+    color: lightgray;
+}
+        #ownermycard,#ownermycard1,#ownermycard2,#ownermycard3,#ownermycard4,#ownermycard5,#ownermycard6,#ownermycard7,#ownermycard8,#ownermycard9,#ownermycard10,#ownermycard11,#ownermycard12,#ownermycard13,#ownermycard14,#ownermycard15,#ownermycard16,#ownermycard17,#ownermycard18,#ownermycard19,#ownermycard20,#ownermycard21,#ownermycard22,#ownermycard23,#ownermycard24,#ownermycard25,#ownermycard26,#ownermycard27,#ownermycard28,#ownermycard29,#ownermycard30,#ownermycard31,#ownermycard32,#ownermycard33,#ownermycard34,#ownermycard35,#ownermycard36,#ownermycard37,#ownermycard38,#ownermycard39,#ownermycard40,#ownermycard41,#ownermycard42,#ownermycard43,#ownermycard44,#ownermycard45,#ownermycard46,#ownermycard47,#ownermycard48,#ownermycard49,#ownermycard50,#ownermycard51,#ownermycard52,#ownermycard53,#ownermycard54,#ownermycard55,#ownermycard56,#ownermycard57,#ownermycard58,#ownermycard59,#ownermycard60,#ownermycard61,#ownermycard62,#ownermycard63,#ownermycard64,#ownermycard65,#ownermycard66,#ownermycard67,#ownermycard68,#ownermycard69,#ownermycard70,#ownermycard71,#ownermycard72,#ownermycard73,#ownermycard74,#ownermycard75,#ownermycard76,#ownermycard77,#ownermycard78,#ownermycard79,#ownermycard80,#ownermycard81,#ownermycard82,#ownermycard83,#ownermycard84,#ownermycard85,#ownermycard86,#ownermycard87,#ownermycard88,#ownermycard89,#ownermycard90,#ownermycard91,#ownermycard92,#ownermycard93,#ownermycard94,#ownermycard95 {
+           display: none;
+         }
+         #myInput {
+           
+            font-size: 0px;
+            width: 181px;
+            height: 91px;
+            border: none;
+            margin: auto;
+            border-radius: 16px 16px 16px 16px;
+            background:url('images/Refresh.png') no-repeat; border-radius: 16px 16px 16px 16px;
+            box-shadow: 0 6px #999;
+           
+        }
+        #myInput:hover {
+           box-shadow: 0 6px 8px 0 rgba(255,255,252,1);
+            -moz-transform:scale(1.03); /*scale up image 1.03x*/
+            -webkit-transform:scale(1.03);
+            -o-transform:scale(1.03);   
+        }
+         #myInput:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+         #addressOwner {
+             color: white;
+             font-size: 40px;
+             text-align: center;
+         }
+  </style>
+   
+    <script>
+$(document).ready(function(){
+  $("#myInput").on("click", function() {
+    var value = $(this).val().toLowerCase();
+    $("#Cards .card").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
+     <script type="text/javascript">
+         //aquiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+          function Get() {
+              
+               $("#log").hide();
+               $("#myInput").hide();
+               $("#cuenta").hide();
+			   $("#user").hide();
+              
+              
+          }
+         
+         document.addEventListener("DOMContentLoaded", Get, false);
+          var myVar;
+
+function myFunction() {
+    myVar = setTimeout(showPage, 2000);
+}
+
+function showPage() {
+  document.getElementById("loader").style.display = "none";
+  document.getElementById("myDiv").style.display = "block";
+}
+         
+         
+       </script>
+    
+</head>
+<body onload="myFunction()" style="margin:0;">
+    <div id="loader"></div>
+    <div style="display:none;" id="myDiv" class="animate-bottom">
+    <div class="allmodal">
+        
+     <!-- Modal Mario Bros -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Mario Bros</h4>
+            <br/>
+            <div id="price"></div>
+             <br/>
+            <div id="nextprice"></div>
+        </div>
+        <div class="modal-body">
+          <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+        <div class="purchase">   
+      <input placeholder='price' id='priceOf' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+            <br/>
+             <br/>
+            <div id='status' ></div>
+            </div> 
+          <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+            
+        </div>
+      </div>
+      
+    </div>
+</div>
+    
+       <!-- Modal Luigi -->
+  <div class="modal fade" id="myModal1" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Luigi</h4>
+            <br/>
+            <div id="price6"></div>
+            <br/>
+            <div id="nextprice6"></div>
+        </div>
+        <div class="modal-body">
+         <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+           <div class="purchase">   
+      <input placeholder='price' id='priceOf6' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+                <br/>
+             <br/>
+            <div id='status6' ></div>
+            </div> 
+          <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+
+      <!-- Modal Wario -->
+  <div class="modal fade" id="myModal2" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Wario</h4>
+            <br/>
+            <div id="price10"></div>
+            <br/>
+            <div id="nextprice10"></div>
+        </div>
+        <div class="modal-body">
+          <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+         <div class="purchase"> 
+            <input placeholder='price' id='priceOf10' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+              <br/>
+             <br/>
+            <div id='status10' ></div>
+                  </div>
+          <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Toad -->
+  <div class="modal fade" id="myModal3" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Toad</h4>
+             <br/>
+            <div id="price8"></div>
+            <br/>
+            <div id="nextprice8"></div>
+        </div>
+        <div class="modal-body">
+           <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+           <div class="purchase"> 
+            <input placeholder='price' id='priceOf8' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+                <br/>
+             <br/>
+            <div id='status8' ></div>
+                  </div>
+          <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Megaman -->
+  <div class="modal fade" id="myModal4" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Megaman</h4>
+             <br/>
+            <div id="price3"></div>
+            <br/>
+            <div id="nextprice3"></div>
+        </div>
+        <div class="modal-body">
+          <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+         <div class="purchase"> 
+            <input placeholder='price' id='priceOf3' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+              <br/>
+             <br/>
+            <div id='status3' ></div>
+                  </div>
+          <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Sonic -->
+  <div class="modal fade" id="myModal5" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Sonic</h4>
+             <br/>
+            <div id="price1"></div>
+            <br/>
+            <div id="nextprice1"></div>
+        </div>
+        <div class="modal-body">
+          <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+             <div class="purchase"> 
+            <input placeholder='price' id='priceOf1' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+                 <br/>
+             <br/>
+            <div id='status1' ></div>
+                  </div>
+          <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Knuckles -->
+  <div class="modal fade" id="myModal6" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Knuckles</h4>
+            <br/>
+            <div id="price9"></div>
+            <br/>
+            <div id="nextprice9"></div>
+             
+        </div>
+        <div class="modal-body">
+          <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+           <div class="purchase"> 
+            <input placeholder='price' id='priceOf9' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+                <br/>
+             <br/>
+            <div id='status9' ></div>
+                  </div>
+           <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Pacman -->
+  <div class="modal fade" id="myModal7" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Pacman</h4>
+             <br/>
+            <div id="price2"></div>
+            <br/>
+            <div id="nextprice2"></div>
+        </div>
+        <div class="modal-body">
+         <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+             <div class="purchase"> 
+            <input placeholder='price' id='priceOf2' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+                 <br/>
+             <br/>
+            <div id='status2' ></div>
+                  </div>
+           <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Bowser -->
+  <div class="modal fade" id="myModal8" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Bowser</h4>
+            <br/>
+            <div id="price11"></div>
+            <br/>
+            <div id="nextprice11"></div>
+        </div>
+        <div class="modal-body">
+         <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+          <div class="purchase"> 
+            <input placeholder='price' id='priceOf11' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+               <br/>
+             <br/>
+            <div id='status11' ></div>
+                  </div>
+           <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Bomberman -->
+  <div class="modal fade" id="myModal9" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Bomberman</h4>
+            <br/>
+            <div id="price4"></div>
+            <br/>
+            <div id="nextprice4"></div>
+        </div>
+        <div class="modal-body">
+           <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+         <div class="purchase"> 
+            <input placeholder='price' id='priceOf4' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+              <br/>
+             <br/>
+            <div id='status4' ></div>
+                  </div>
+           <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Donkey Kong -->
+  <div class="modal fade" id="myModal10" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Donkey Kong</h4>
+             <br/>
+            <div id="price5"></div>
+            <br/>
+            <div id="nextprice5"></div>
+        </div>
+        <div class="modal-body">
+           <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+         <div class="purchase"> 
+            <input placeholder='price' id='priceOf5' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+              <br/>
+             <br/>
+            <div id='status5' ></div>
+                  </div>
+           <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Yoshi -->
+  <div class="modal fade" id="myModal11" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Yoshi</h4>
+            <br/>
+            <div id="price7"></div>
+            <br/>
+            <div id="nextprice7"></div>
+        </div>
+        <div class="modal-body">
+          <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+          <div class="purchase"> 
+            <input placeholder='price' id='priceOf7' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+               <br/>
+             <br/>
+            <div id='status7' ></div>
+                  </div>
+           <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+          <!-- Modal Sub Zero -->
+  <div class="modal fade" id="myModal12" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Sub Zero</h4>
+            <br/>
+            <div id="price12"></div>
+             <br/>
+            <div id="nextprice12"></div>
+        </div>
+        <div class="modal-body">
+          <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+        <div class="purchase">   
+      <input placeholder='price' id='priceOf12' class='inputField' type="number">
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+            <br/>
+             <br/>
+            <div id='status12' ></div>
+            </div> 
+          <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+            
+        </div>
+      </div>
+      
+    </div>
+</div>
+     <!-- Modal Assassin's Creed -->
+  <div class="modal fade" id="myModal13" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Assassin's Creed</h4>
+            <br/>
+            <div id="price13"></div>
+            <br/>
+            <div id="nextprice13"></div>
+        </div>
+        <div class="modal-body">
+         <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+           <div class="purchase">   
+      <input placeholder='price' id='priceOf13' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+               <br/>
+             <br/>
+            <div id='status13' ></div>
+            </div> 
+          <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+
+      <!-- Modal Kratos -->
+  <div class="modal fade" id="myModal14" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Kratos</h4>
+            <br/>
+            <div id="price14"></div>
+            <br/>
+            <div id="nextprice14"></div>
+        </div>
+        <div class="modal-body">
+          <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+         <div class="purchase"> 
+            <input placeholder='price' id='priceOf14' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+             <br/>
+             <br/>
+            <div id='status14' ></div>
+                  </div>
+          <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Raiden -->
+  <div class="modal fade" id="myModal15" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Raiden</h4>
+             <br/>
+            <div id="price15"></div>
+            <br/>
+            <div id="nextprice15"></div>
+        </div>
+        <div class="modal-body">
+           <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+           <div class="purchase"> 
+            <input placeholder='price' id='priceOf15' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+               <br/>
+             <br/>
+            <div id='status15' ></div>
+                  </div>
+          <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Kitana -->
+  <div class="modal fade" id="myModal16" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Kitana</h4>
+             <br/>
+            <div id="price16"></div>
+            <br/>
+            <div id="nextprice16"></div>
+        </div>
+        <div class="modal-body">
+          <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+         <div class="purchase"> 
+            <input placeholder='price' id='priceOf16' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+             <br/>
+             <br/>
+            <div id='status16' ></div>
+                  </div>
+          <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal The Last Of US -->
+  <div class="modal fade" id="myModal17" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: The Last Of US</h4>
+             <br/>
+            <div id="price17"></div>
+            <br/>
+            <div id="nextprice17"></div>
+        </div>
+        <div class="modal-body">
+          <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+             <div class="purchase"> 
+            <input placeholder='price' id='priceOf17' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+                 <br/>
+             <br/>
+            <div id='status17' ></div>
+                  </div>
+          <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Jonny Cage -->
+  <div class="modal fade" id="myModal18" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Jonny Cage</h4>
+            <br/>
+            <div id="price18"></div>
+            <br/>
+            <div id="nextprice18"></div>
+             
+        </div>
+        <div class="modal-body">
+          <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+           <div class="purchase"> 
+            <input placeholder='price' id='priceOf18' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+               <br/>
+             <br/>
+            <div id='status18' ></div>
+                  </div>
+           <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Prince Of Persia -->
+  <div class="modal fade" id="myModal19" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Prince Of Persia</h4>
+             <br/>
+            <div id="price19"></div>
+            <br/>
+            <div id="nextprice19"></div>
+        </div>
+        <div class="modal-body">
+         <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+             <div class="purchase"> 
+            <input placeholder='price' id='priceOf19' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+                 <br/>
+             <br/>
+            <div id='status19' ></div>
+                  </div>
+           <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Ada -->
+  <div class="modal fade" id="myModal20" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Ada</h4>
+            <br/>
+            <div id="price20"></div>
+            <br/>
+            <div id="nextprice20"></div>
+        </div>
+        <div class="modal-body">
+         <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+          <div class="purchase"> 
+            <input placeholder='price' id='priceOf20' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+              <br/>
+             <br/>
+            <div id='status20' ></div>
+                  </div>
+           <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Goro -->
+  <div class="modal fade" id="myModal21" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Goro</h4>
+            <br/>
+            <div id="price21"></div>
+            <br/>
+            <div id="nextprice21"></div>
+        </div>
+        <div class="modal-body">
+           <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+         <div class="purchase"> 
+            <input placeholder='price' id='priceOf21' class='inputField' >
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+             <br/>
+             <br/>
+            <div id='status21' ></div>
+                  </div>
+           <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Leon -->
+  <div class="modal fade" id="myModal22" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Leon</h4>
+             <br/>
+            <div id="price22"></div>
+            <br/>
+            <div id="nextprice22"></div>
+        </div>
+        <div class="modal-body">
+           <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+         <div class="purchase"> 
+            <input placeholder='price' id='priceOf22' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+             <br/>
+             <br/>
+            <div id='status22' ></div>
+                  </div>
+           <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Ryu -->
+  <div class="modal fade" id="myModal23" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Ryu</h4>
+            <br/>
+            <div id="price23"></div>
+            <br/>
+            <div id="nextprice23"></div>
+        </div>
+        <div class="modal-body">
+          <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+          <div class="purchase"> 
+            <input placeholder='price' id='priceOf23' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+              <br/>
+             <br/>
+            <div id='status23' ></div>
+                  </div>
+           <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+             <!-- Modal Aiden -->
+  <div class="modal fade" id="myModal25" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Aiden</h4>
+            <br/>
+            <div id="price25"></div>
+             <br/>
+            <div id="nextprice25"></div>
+        </div>
+        <div class="modal-body">
+          <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+        <div class="purchase">   
+      <input placeholder='price' id='priceOf25' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+            <br/>
+             <br/>
+            <div id='status25' ></div>
+            </div> 
+          <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+            
+        </div>
+      </div>
+      
+    </div>
+</div>
+    
+       <!-- Modal Blood Borne -->
+  <div class="modal fade" id="myModal26" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Blood Borne</h4>
+            <br/>
+            <div id="price26"></div>
+            <br/>
+            <div id="nextprice26"></div>
+        </div>
+        <div class="modal-body">
+         <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+           <div class="purchase">   
+      <input placeholder='price' id='priceOf26' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+               <br/>
+             <br/>
+            <div id='status26' ></div>
+            </div> 
+          <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+
+      <!-- Modal Doom -->
+  <div class="modal fade" id="myModal27" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Doom</h4>
+            <br/>
+            <div id="price27"></div>
+            <br/>
+            <div id="nextprice27"></div>
+        </div>
+        <div class="modal-body">
+          <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+         <div class="purchase"> 
+            <input placeholder='price' id='priceOf27' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+             <br/>
+             <br/>
+            <div id='status27' ></div>
+                  </div>
+          <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Hitman -->
+  <div class="modal fade" id="myModal24" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Hitman</h4>
+             <br/>
+            <div id="price24"></div>
+            <br/>
+            <div id="nextprice24"></div>
+        </div>
+        <div class="modal-body">
+           <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+           <div class="purchase"> 
+            <input placeholder='price' id='priceOf24' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+               <br/>
+             <br/>
+            <div id='status24' ></div>
+                  </div>
+          <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Mileena -->
+  <div class="modal fade" id="myModal28" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Mileena</h4>
+             <br/>
+            <div id="price28"></div>
+            <br/>
+            <div id="nextprice28"></div>
+        </div>
+        <div class="modal-body">
+          <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+         <div class="purchase"> 
+            <input placeholder='price' id='priceOf28' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+             <br/>
+             <br/>
+            <div id='status28' ></div>
+                  </div>
+          <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Scorpion -->
+  <div class="modal fade" id="myModal29" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Scorpion</h4>
+             <br/>
+            <div id="price29"></div>
+            <br/>
+            <div id="nextprice29"></div>
+        </div>
+        <div class="modal-body">
+          <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+             <div class="purchase"> 
+            <input placeholder='price' id='priceOf29' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+                 <br/>
+             <br/>
+            <div id='status29' ></div>
+                  </div>
+          <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Shadow Mordor -->
+  <div class="modal fade" id="myModal30" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Shadow Mordor</h4>
+            <br/>
+            <div id="price30"></div>
+            <br/>
+            <div id="nextprice30"></div>
+             
+        </div>
+        <div class="modal-body">
+          <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+           <div class="purchase"> 
+            <input placeholder='price' id='priceOf30' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+               <br/>
+             <br/>
+            <div id='status30' ></div>
+                  </div>
+           <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal The Witcher -->
+  <div class="modal fade" id="myModal31" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: The Witcher</h4>
+             <br/>
+            <div id="price31"></div>
+            <br/>
+            <div id="nextprice31"></div>
+        </div>
+        <div class="modal-body">
+         <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+             <div class="purchase"> 
+            <input placeholder='price' id='priceOf31' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+                 <br/>
+             <br/>
+            <div id='status31' ></div>
+                  </div>
+           <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Pagan Mind -->
+  <div class="modal fade" id="myModal32" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Pagan Mind</h4>
+            <br/>
+            <div id="price32"></div>
+            <br/>
+            <div id="nextprice32"></div>
+        </div>
+        <div class="modal-body">
+         <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+          <div class="purchase"> 
+            <input placeholder='price' id='priceOf32' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+              <br/>
+             <br/>
+            <div id='status32' ></div>
+                  </div>
+           <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Uncharted -->
+  <div class="modal fade" id="myModal33" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Uncharted</h4>
+            <br/>
+            <div id="price33"></div>
+            <br/>
+            <div id="nextprice33"></div>
+        </div>
+        <div class="modal-body">
+           <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+         <div class="purchase"> 
+            <input placeholder='price' id='priceOf33' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+             <br/>
+             <br/>
+            <div id='status33' ></div>
+                  </div>
+           <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Blazkowicz -->
+  <div class="modal fade" id="myModal34" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Blazkowicz</h4>
+             <br/>
+            <div id="price34"></div>
+            <br/>
+            <div id="nextprice34"></div>
+        </div>
+        <div class="modal-body">
+           <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+         <div class="purchase"> 
+            <input placeholder='price' id='priceOf34' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+             <br/>
+             <br/>
+            <div id='status34' ></div>
+                  </div>
+           <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Lara Croft -->
+  <div class="modal fade" id="myModal35" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Lara Croft</h4>
+            <br/>
+            <div id="price35"></div>
+            <br/>
+            <div id="nextprice35"></div>
+        </div>
+        <div class="modal-body">
+          <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+          <div class="purchase"> 
+            <input placeholder='price' id='priceOf35' class='inputField'>
+      <button id="button" class="button" onclick="p">Buy This Contract</button>
+              <br/>
+             <br/>
+            <div id='status35' ></div>
+                  </div>
+           <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+           <!-- Modal Kirby -->
+  <div class="modal fade" id="myModal36" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Kirby</h4>
+            <br/>
+            <div id="price36"></div>
+             <br/>
+            <div id="nextprice36"></div>
+        </div>
+        <div class="modal-body">
+          <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+        <div class="purchase">   
+      <input placeholder='price' id='priceOf36' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+            <br/>
+             <br/>
+            <div id='status36' ></div>
+            </div> 
+          <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+            
+        </div>
+      </div>
+      
+    </div>
+</div>
+    
+       <!-- Rayman -->
+  <div class="modal fade" id="myModal37" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Rayman</h4>
+            <br/>
+            <div id="price37"></div>
+            <br/>
+            <div id="nextprice37"></div>
+        </div>
+        <div class="modal-body">
+         <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+           <div class="purchase">   
+      <input placeholder='price' id='priceOf37' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+               <br/>
+             <br/>
+            <div id='status37' ></div>
+            </div> 
+          <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+
+      <!-- Modal Crash -->
+  <div class="modal fade" id="myModal38" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Crash</h4>
+            <br/>
+            <div id="price38"></div>
+            <br/>
+            <div id="nextprice38"></div>
+        </div>
+        <div class="modal-body">
+          <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+         <div class="purchase"> 
+            <input placeholder='price' id='priceOf38' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+             <br/>
+             <br/>
+            <div id='status38' ></div>
+                  </div>
+          <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Ice Climbers -->
+  <div class="modal fade" id="myModal39" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Ice Climbers</h4>
+             <br/>
+            <div id="price39"></div>
+            <br/>
+            <div id="nextprice39"></div>
+        </div>
+        <div class="modal-body">
+           <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+           <div class="purchase"> 
+            <input placeholder='price' id='priceOf39' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+               <br/>
+             <br/>
+            <div id='status39' ></div>
+                  </div>
+          <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Star Fox -->
+  <div class="modal fade" id="myModal40" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Star Fox</h4>
+             <br/>
+            <div id="price40"></div>
+            <br/>
+            <div id="nextprice40"></div>
+        </div>
+        <div class="modal-body">
+          <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+         <div class="purchase"> 
+            <input placeholder='price' id='priceOf40' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+             <br/>
+             <br/>
+            <div id='status40' ></div>
+                  </div>
+          <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Birdo -->
+  <div class="modal fade" id="myModal41" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Birdo</h4>
+             <br/>
+            <div id="price41"></div>
+            <br/>
+            <div id="nextprice41"></div>
+        </div>
+        <div class="modal-body">
+          <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+             <div class="purchase"> 
+            <input placeholder='price' id='priceOf41' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+                 <br/>
+             <br/>
+            <div id='status41' ></div>
+                  </div>
+          <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Diddy Kong -->
+  <div class="modal fade" id="myModal42" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Diddy Kong</h4>
+            <br/>
+            <div id="price42"></div>
+            <br/>
+            <div id="nextprice42"></div>
+             
+        </div>
+        <div class="modal-body">
+          <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+           <div class="purchase"> 
+            <input placeholder='price' id='priceOf42' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+               <br/>
+             <br/>
+            <div id='status42' ></div>
+                  </div>
+           <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Minecraft -->
+  <div class="modal fade" id="myModal43" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Minecraft</h4>
+             <br/>
+            <div id="price43"></div>
+            <br/>
+            <div id="nextprice43"></div>
+        </div>
+        <div class="modal-body">
+         <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+             <div class="purchase"> 
+            <input placeholder='price' id='priceOf43' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+                 <br/>
+             <br/>
+            <div id='status43' ></div>
+                  </div>
+           <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Ratchet -->
+  <div class="modal fade" id="myModal44" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Ratchet</h4>
+            <br/>
+            <div id="price44"></div>
+            <br/>
+            <div id="nextprice44"></div>
+        </div>
+        <div class="modal-body">
+         <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+          <div class="purchase"> 
+            <input placeholder='price' id='priceOf44' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+              <br/>
+             <br/>
+            <div id='status44' ></div>
+                  </div>
+           <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Zelda -->
+  <div class="modal fade" id="myModal45" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Zelda</h4>
+            <br/>
+            <div id="price45"></div>
+            <br/>
+            <div id="nextprice45"></div>
+        </div>
+        <div class="modal-body">
+           <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+         <div class="purchase"> 
+            <input placeholder='price' id='priceOf45' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+             <br/>
+             <br/>
+            <div id='status45' ></div>
+                  </div>
+           <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Metroid -->
+  <div class="modal fade" id="myModal46" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Metroid</h4>
+             <br/>
+            <div id="price46"></div>
+            <br/>
+            <div id="nextprice46"></div>
+        </div>
+        <div class="modal-body">
+           <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+         <div class="purchase"> 
+            <input placeholder='price' id='priceOf46' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+             <br/>
+             <br/>
+            <div id='status46' ></div>
+                  </div>
+           <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Dr. Eggman -->
+  <div class="modal fade" id="myModal47" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Dr. Eggman</h4>
+            <br/>
+            <div id="price47"></div>
+            <br/>
+            <div id="nextprice47"></div>
+        </div>
+        <div class="modal-body">
+          <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+          <div class="purchase"> 
+            <input placeholder='price' id='priceOf47' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+              <br/>
+             <br/>
+            <div id='status47' ></div>
+                  </div>
+           <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+            <!-- Modal Contra -->
+  <div class="modal fade" id="myModal48" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Contra</h4>
+            <br/>
+            <div id="price48"></div>
+             <br/>
+            <div id="nextprice48"></div>
+        </div>
+        <div class="modal-body">
+          <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+        <div class="purchase">   
+      <input placeholder='price' id='priceOf48' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+            <br/>
+             <br/>
+            <div id='status48' ></div>
+            </div> 
+          <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+            
+        </div>
+      </div>
+      
+    </div>
+</div>
+    
+       <!-- Modal Aloy -->
+  <div class="modal fade" id="myModal49" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Aloy</h4>
+            <br/>
+            <div id="price49"></div>
+            <br/>
+            <div id="nextprice49"></div>
+        </div>
+        <div class="modal-body">
+         <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+           <div class="purchase">   
+      <input placeholder='price' id='priceOf49' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+               <br/>
+             <br/>
+            <div id='status49' ></div>
+            </div> 
+          <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+
+      <!-- Modal Cloud Strife -->
+  <div class="modal fade" id="myModal50" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Cloud Strife</h4>
+            <br/>
+            <div id="price50"></div>
+            <br/>
+            <div id="nextprice50"></div>
+        </div>
+        <div class="modal-body">
+          <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+         <div class="purchase"> 
+            <input placeholder='price' id='priceOf50' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+             <br/>
+             <br/>
+            <div id='status50' ></div>
+                  </div>
+          <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Hunter Destiny -->
+  <div class="modal fade" id="myModal51" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Hunter Destiny</h4>
+             <br/>
+            <div id="price51"></div>
+            <br/>
+            <div id="nextprice51"></div>
+        </div>
+        <div class="modal-body">
+           <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+           <div class="purchase"> 
+            <input placeholder='price' id='priceOf51' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+               <br/>
+             <br/>
+            <div id='status51' ></div>
+                  </div>
+          <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Jill Valentine -->
+  <div class="modal fade" id="myModal52" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Jill Valentine</h4>
+             <br/>
+            <div id="price52"></div>
+            <br/>
+            <div id="nextprice52"></div>
+        </div>
+        <div class="modal-body">
+          <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+         <div class="purchase"> 
+            <input placeholder='price' id='priceOf52' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+             <br/>
+             <br/>
+            <div id='status52' ></div>
+                  </div>
+          <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal John Marston -->
+  <div class="modal fade" id="myModal53" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: John Marston</h4>
+             <br/>
+            <div id="price53"></div>
+            <br/>
+            <div id="nextprice53"></div>
+        </div>
+        <div class="modal-body">
+          <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+             <div class="purchase"> 
+            <input placeholder='price' id='priceOf53' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+                 <br/>
+             <br/>
+            <div id='status53' ></div>
+                  </div>
+          <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Vivi Ornitier -->
+  <div class="modal fade" id="myModal54" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Vivi Ornitier</h4>
+            <br/>
+            <div id="price54"></div>
+            <br/>
+            <div id="nextprice54"></div>
+             
+        </div>
+        <div class="modal-body">
+          <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+           <div class="purchase"> 
+            <input placeholder='price' id='priceOf54' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+               <br/>
+             <br/>
+            <div id='status54' ></div>
+                  </div>
+           <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Wrench -->
+  <div class="modal fade" id="myModal55" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Wrench</h4>
+             <br/>
+            <div id="price55"></div>
+            <br/>
+            <div id="nextprice55"></div>
+        </div>
+        <div class="modal-body">
+         <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+             <div class="purchase"> 
+            <input placeholder='price' id='priceOf55' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+                 <br/>
+             <br/>
+            <div id='status55' ></div>
+                  </div>
+           <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal July Kidman -->
+  <div class="modal fade" id="myModal56" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: July Kidman</h4>
+            <br/>
+            <div id="price56"></div>
+            <br/>
+            <div id="nextprice56"></div>
+        </div>
+        <div class="modal-body">
+         <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+          <div class="purchase"> 
+            <input placeholder='price' id='priceOf56' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+              <br/>
+             <br/>
+            <div id='status56' ></div>
+                  </div>
+           <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Sebastian C. -->
+  <div class="modal fade" id="myModal57" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Sebastian C.</h4>
+            <br/>
+            <div id="price57"></div>
+            <br/>
+            <div id="nextprice57"></div>
+        </div>
+        <div class="modal-body">
+           <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+         <div class="purchase"> 
+            <input placeholder='price' id='priceOf57' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+             <br/>
+             <br/>
+            <div id='status57' ></div>
+                  </div>
+           <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Solid Snake -->
+  <div class="modal fade" id="myModal58" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Solid Snake</h4>
+             <br/>
+            <div id="price58"></div>
+            <br/>
+            <div id="nextprice58"></div>
+        </div>
+        <div class="modal-body">
+           <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+         <div class="purchase"> 
+            <input placeholder='price' id='priceOf58' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+             <br/>
+             <br/>
+            <div id='status58' ></div>
+                  </div>
+           <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Trevor -->
+  <div class="modal fade" id="myModal59" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Trevor</h4>
+            <br/>
+            <div id="price59"></div>
+            <br/>
+            <div id="nextprice59"></div>
+        </div>
+        <div class="modal-body">
+          <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+          <div class="purchase"> 
+            <input placeholder='price' id='priceOf59' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+              <br/>
+             <br/>
+            <div id='status59' ></div>
+                  </div>
+           <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+    <!-- Modal Duck Hunt Dog -->
+  <div class="modal fade" id="myModal60" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Duck Hunt Dog</h4>
+            <br/>
+            <div id="price60"></div>
+             <br/>
+            <div id="nextprice60"></div>
+        </div>
+        <div class="modal-body">
+          <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+        <div class="purchase">   
+      <input placeholder='price' id='priceOf60' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+            <br/>
+             <br/>
+            <div id='status60' ></div>
+            </div> 
+          <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+            
+        </div>
+      </div>
+      
+    </div>
+</div>
+    
+       <!-- Modal Princess Peach -->
+  <div class="modal fade" id="myModal61" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Princess Peach</h4>
+            <br/>
+            <div id="price61"></div>
+            <br/>
+            <div id="nextprice61"></div>
+        </div>
+        <div class="modal-body">
+         <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+           <div class="purchase">   
+      <input placeholder='price' id='priceOf61' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+               <br/>
+             <br/>
+            <div id='status61' ></div>
+            </div> 
+          <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+
+      <!-- Modal Dixie Kong -->
+  <div class="modal fade" id="myModal62" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Dixie Kong</h4>
+            <br/>
+            <div id="price62"></div>
+            <br/>
+            <div id="nextprice62"></div>
+        </div>
+        <div class="modal-body">
+          <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+         <div class="purchase"> 
+            <input placeholder='price' id='priceOf62' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+             <br/>
+             <br/>
+            <div id='status62' ></div>
+                  </div>
+          <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Paragoomba -->
+  <div class="modal fade" id="myModal63" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Paragoomba</h4>
+             <br/>
+            <div id="price63"></div>
+            <br/>
+            <div id="nextprice63"></div>
+        </div>
+        <div class="modal-body">
+           <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+           <div class="purchase"> 
+            <input placeholder='price' id='priceOf63' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+               <br/>
+             <br/>
+            <div id='status63' ></div>
+                  </div>
+          <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Qbert -->
+  <div class="modal fade" id="myModal64" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Qbert</h4>
+             <br/>
+            <div id="price64"></div>
+            <br/>
+            <div id="nextprice64"></div>
+        </div>
+        <div class="modal-body">
+          <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+         <div class="purchase"> 
+            <input placeholder='price' id='priceOf64' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+             <br/>
+             <br/>
+            <div id='status64' ></div>
+                  </div>
+          <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Tails -->
+  <div class="modal fade" id="myModal65" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Tails</h4>
+             <br/>
+            <div id="price65"></div>
+            <br/>
+            <div id="nextprice65"></div>
+        </div>
+        <div class="modal-body">
+          <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+             <div class="purchase"> 
+            <input placeholder='price' id='priceOf65' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+                 <br/>
+             <br/>
+            <div id='status65' ></div>
+                  </div>
+          <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Angry Birds -->
+  <div class="modal fade" id="myModal66" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Angry Birds</h4>
+            <br/>
+            <div id="price66"></div>
+            <br/>
+            <div id="nextprice66"></div>
+             
+        </div>
+        <div class="modal-body">
+          <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+           <div class="purchase"> 
+            <input placeholder='price' id='priceOf66' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+               <br/>
+             <br/>
+            <div id='status66' ></div>
+                  </div>
+           <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Earthworm Jim -->
+  <div class="modal fade" id="myModal67" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Earthworm Jim</h4>
+             <br/>
+            <div id="price67"></div>
+            <br/>
+            <div id="nextprice67"></div>
+        </div>
+        <div class="modal-body">
+         <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+             <div class="purchase"> 
+            <input placeholder='price' id='priceOf67' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+                 <br/>
+             <br/>
+            <div id='status67' ></div>
+                  </div>
+           <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Lemmings -->
+  <div class="modal fade" id="myModal68" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Lemmings</h4>
+            <br/>
+            <div id="price68"></div>
+            <br/>
+            <div id="nextprice68"></div>
+        </div>
+        <div class="modal-body">
+         <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+          <div class="purchase"> 
+            <input placeholder='price' id='priceOf68' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+              <br/>
+             <br/>
+            <div id='status68' ></div>
+                  </div>
+           <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Knack -->
+  <div class="modal fade" id="myModal69" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Knack</h4>
+            <br/>
+            <div id="price69"></div>
+            <br/>
+            <div id="nextprice69"></div>
+        </div>
+        <div class="modal-body">
+           <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+         <div class="purchase"> 
+            <input placeholder='price' id='priceOf69' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+             <br/>
+             <br/>
+            <div id='status69' ></div>
+                  </div>
+           <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Waluigi -->
+  <div class="modal fade" id="myModal70" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Waluigi</h4>
+             <br/>
+            <div id="price70"></div>
+            <br/>
+            <div id="nextprice70"></div>
+        </div>
+        <div class="modal-body">
+           <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+         <div class="purchase"> 
+            <input placeholder='price' id='priceOf70' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+             <br/>
+             <br/>
+            <div id='status70' ></div>
+                  </div>
+           <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Kiddy Kong -->
+  <div class="modal fade" id="myModal71" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Kiddy Kong</h4>
+            <br/>
+            <div id="price71"></div>
+            <br/>
+            <div id="nextprice71"></div>
+        </div>
+        <div class="modal-body">
+          <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+          <div class="purchase"> 
+            <input placeholder='price' id='priceOf71' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+              <br/>
+             <br/>
+            <div id='status71' ></div>
+                  </div>
+           <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>     
+   <!-- Modal Lightning -->
+  <div class="modal fade" id="myModal72" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Lightning</h4>
+            <br/>
+            <div id="price72"></div>
+             <br/>
+            <div id="nextprice72"></div>
+        </div>
+        <div class="modal-body">
+          <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+        <div class="purchase">   
+      <input placeholder='price' id='priceOf72' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+            <br/>
+             <br/>
+            <div id='status72' ></div>
+            </div> 
+          <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+            
+        </div>
+      </div>
+      
+    </div>
+</div>
+    
+       <!-- Modal Lucas Kellen -->
+  <div class="modal fade" id="myModal73" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Lucas Kellen</h4>
+            <br/>
+            <div id="price73"></div>
+            <br/>
+            <div id="nextprice73"></div>
+        </div>
+        <div class="modal-body">
+         <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+           <div class="purchase">   
+      <input placeholder='price' id='priceOf73' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+               <br/>
+             <br/>
+            <div id='status73' ></div>
+            </div> 
+          <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+
+      <!-- Modal Ninja Gaiden -->
+  <div class="modal fade" id="myModal74" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Ninja Gaiden</h4>
+            <br/>
+            <div id="price74"></div>
+            <br/>
+            <div id="nextprice74"></div>
+        </div>
+        <div class="modal-body">
+          <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+         <div class="purchase"> 
+            <input placeholder='price' id='priceOf74' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+             <br/>
+             <br/>
+            <div id='status74' ></div>
+                  </div>
+          <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Quiet -->
+  <div class="modal fade" id="myModal75" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Quiet</h4>
+             <br/>
+            <div id="price75"></div>
+            <br/>
+            <div id="nextprice75"></div>
+        </div>
+        <div class="modal-body">
+           <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+           <div class="purchase"> 
+            <input placeholder='price' id='priceOf75' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+               <br/>
+             <br/>
+            <div id='status75' ></div>
+                  </div>
+          <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Tomb Rider -->
+  <div class="modal fade" id="myModal76" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Tomb Rider</h4>
+             <br/>
+            <div id="price76"></div>
+            <br/>
+            <div id="nextprice76"></div>
+        </div>
+        <div class="modal-body">
+          <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+         <div class="purchase"> 
+            <input placeholder='price' id='priceOf76' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+             <br/>
+             <br/>
+            <div id='status76' ></div>
+                  </div>
+          <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Michael De Santa -->
+  <div class="modal fade" id="myModal77" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Michael De Santa</h4>
+             <br/>
+            <div id="price77"></div>
+            <br/>
+            <div id="nextprice77"></div>
+        </div>
+        <div class="modal-body">
+          <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+             <div class="purchase"> 
+            <input placeholder='price' id='priceOf77' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+                 <br/>
+             <br/>
+            <div id='status77' ></div>
+                  </div>
+          <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Cammy -->
+  <div class="modal fade" id="myModal78" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Cammy</h4>
+            <br/>
+            <div id="price78"></div>
+            <br/>
+            <div id="nextprice78"></div>
+             
+        </div>
+        <div class="modal-body">
+          <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+           <div class="purchase"> 
+            <input placeholder='price' id='priceOf78' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+               <br/>
+             <br/>
+            <div id='status78' ></div>
+                  </div>
+           <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Franklin -->
+  <div class="modal fade" id="myModal79" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Franklin</h4>
+             <br/>
+            <div id="price79"></div>
+            <br/>
+            <div id="nextprice79"></div>
+        </div>
+        <div class="modal-body">
+         <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+             <div class="purchase"> 
+            <input placeholder='price' id='priceOf79' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+                 <br/>
+             <br/>
+            <div id='status79' ></div>
+                  </div>
+           <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Sonya Blade -->
+  <div class="modal fade" id="myModal80" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Sonya Blade</h4>
+            <br/>
+            <div id="price80"></div>
+            <br/>
+            <div id="nextprice80"></div>
+        </div>
+        <div class="modal-body">
+         <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+          <div class="purchase"> 
+            <input placeholder='price' id='priceOf80' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+              <br/>
+             <br/>
+            <div id='status80' ></div>
+                  </div>
+           <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Chun Li -->
+  <div class="modal fade" id="myModal81" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Chun Li</h4>
+            <br/>
+            <div id="price81"></div>
+            <br/>
+            <div id="nextprice81"></div>
+        </div>
+        <div class="modal-body">
+           <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+         <div class="purchase"> 
+            <input placeholder='price' id='priceOf81' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+             <br/>
+             <br/>
+            <div id='status81' ></div>
+                  </div>
+           <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Sitara -->
+  <div class="modal fade" id="myModal82" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Sitara</h4>
+             <br/>
+            <div id="price82"></div>
+            <br/>
+            <div id="nextprice82"></div>
+        </div>
+        <div class="modal-body">
+           <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+         <div class="purchase"> 
+            <input placeholder='price' id='priceOf82' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+             <br/>
+             <br/>
+            <div id='status82' ></div>
+                  </div>
+           <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Marcus -->
+  <div class="modal fade" id="myModal83" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Marcus</h4>
+            <br/>
+            <div id="price83"></div>
+            <br/>
+            <div id="nextprice83"></div>
+        </div>
+        <div class="modal-body">
+          <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+          <div class="purchase"> 
+            <input placeholder='price' id='priceOf83' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+              <br/>
+             <br/>
+            <div id='status83' ></div>
+                  </div>
+           <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+          <!-- Modal Frau Engel -->
+  <div class="modal fade" id="myModal84" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Frau Engel</h4>
+            <br/>
+            <div id="price84"></div>
+             <br/>
+            <div id="nextprice84"></div>
+        </div>
+        <div class="modal-body">
+          <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+        <div class="purchase">   
+      <input placeholder='price' id='priceOf84' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+            <br/>
+             <br/>
+            <div id='status84' ></div>
+            </div> 
+          <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+            
+        </div>
+      </div>
+      
+    </div>
+</div>
+    
+       <!-- Modal Mancubus -->
+  <div class="modal fade" id="myModal85" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Mancubus</h4>
+            <br/>
+            <div id="price85"></div>
+            <br/>
+            <div id="nextprice85"></div>
+        </div>
+        <div class="modal-body">
+         <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+           <div class="purchase">   
+      <input placeholder='price' id='priceOf85' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+               <br/>
+             <br/>
+            <div id='status85' ></div>
+            </div> 
+          <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+
+      <!-- Modal Albert Wesker -->
+  <div class="modal fade" id="myModal86" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Albert Wesker</h4>
+            <br/>
+            <div id="price86"></div>
+            <br/>
+            <div id="nextprice86"></div>
+        </div>
+        <div class="modal-body">
+          <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+         <div class="purchase"> 
+            <input placeholder='price' id='priceOf86' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+             <br/>
+             <br/>
+            <div id='status86' ></div>
+                  </div>
+          <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Pinky -->
+  <div class="modal fade" id="myModal87" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Pinky</h4>
+             <br/>
+            <div id="price87"></div>
+            <br/>
+            <div id="nextprice87"></div>
+        </div>
+        <div class="modal-body">
+           <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+           <div class="purchase"> 
+            <input placeholder='price' id='priceOf87' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+               <br/>
+             <br/>
+            <div id='status87' ></div>
+                  </div>
+          <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Pyramid Head -->
+  <div class="modal fade" id="myModal88" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Pyramid Head</h4>
+             <br/>
+            <div id="price88"></div>
+            <br/>
+            <div id="nextprice88"></div>
+        </div>
+        <div class="modal-body">
+          <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+         <div class="purchase"> 
+            <input placeholder='price' id='priceOf88' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+             <br/>
+             <br/>
+            <div id='status88' ></div>
+                  </div>
+          <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal The Keeper -->
+  <div class="modal fade" id="myModal89" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: The Keeper</h4>
+             <br/>
+            <div id="price89"></div>
+            <br/>
+            <div id="nextprice89"></div>
+        </div>
+        <div class="modal-body">
+          <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+             <div class="purchase"> 
+            <input placeholder='price' id='priceOf89' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+                 <br/>
+             <br/>
+            <div id='status89' ></div>
+                  </div>
+          <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Nemesis -->
+  <div class="modal fade" id="myModal90" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Nemesis</h4>
+            <br/>
+            <div id="price90"></div>
+            <br/>
+            <div id="nextprice90"></div>
+             
+        </div>
+        <div class="modal-body">
+          <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+           <div class="purchase"> 
+            <input placeholder='price' id='priceOf90' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+               <br/>
+             <br/>
+            <div id='status90' ></div>
+                  </div>
+           <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal CyberDemon -->
+  <div class="modal fade" id="myModal91" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: CyberDemon</h4>
+             <br/>
+            <div id="price91"></div>
+            <br/>
+            <div id="nextprice91"></div>
+        </div>
+        <div class="modal-body">
+         <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+             <div class="purchase"> 
+            <input placeholder='price' id='priceOf91' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+                 <br/>
+             <br/>
+            <div id='status91' ></div>
+                  </div>
+           <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal CacoDemon -->
+  <div class="modal fade" id="myModal92" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: CacoDemon</h4>
+            <br/>
+            <div id="price92"></div>
+            <br/>
+            <div id="nextprice92"></div>
+        </div>
+        <div class="modal-body">
+         <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+          <div class="purchase"> 
+            <input placeholder='price' id='priceOf92' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+              <br/>
+             <br/>
+            <div id='status92' ></div>
+                  </div>
+           <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Devil Jin Kazama -->
+  <div class="modal fade" id="myModal93" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Devil Jin Kazama</h4>
+            <br/>
+            <div id="price93"></div>
+            <br/>
+            <div id="nextprice93"></div>
+        </div>
+        <div class="modal-body">
+           <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+         <div class="purchase"> 
+            <input placeholder='price' id='priceOf93' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+             <br/>
+             <br/>
+            <div id='status93' ></div>
+                  </div>
+           <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Nurse Silent Hill -->
+  <div class="modal fade" id="myModal94" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Nurse Silent Hill</h4>
+             <br/>
+            <div id="price94"></div>
+            <br/>
+            <div id="nextprice94"></div>
+        </div>
+        <div class="modal-body">
+           <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+         <div class="purchase"> 
+            <input placeholder='price' id='priceOf94' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+             <br/>
+             <br/>
+            <div id='status94' ></div>
+                  </div>
+           <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+      <!-- Modal Lisa Garland -->
+  <div class="modal fade" id="myModal95" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contract: Lisa Garland</h4>
+            <br/>
+            <div id="price95"></div>
+            <br/>
+            <div id="nextprice95"></div>
+        </div>
+        <div class="modal-body">
+          <p>Transactions on the Blockchain take time to process...</p>
+        </div>
+        <div class="modal-footer">
+          <div class="purchase"> 
+            <input placeholder='price' id='priceOf95' class='inputField'>
+      <button id="button" class="button" onclick="">Buy This Contract</button>
+              <br/>
+             <br/>
+            <div id='status95' ></div>
+                  </div>
+           <br/><br/><br/>
+            <P style= "font-size: 15px; text-align:center" text >* If someone else outbids you during this time or if your transaction fails, your ETH will be refunded.</P>
+        </div>
+      </div>
+      
+    </div>
+</div>
+        
+        
+        
+   </div> 
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a href="home.html"><img id="logo" src="images/logo%20proyecto.png"></a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+           <li><a href="home.html">Home</a></li>
+        <li><a href="Marketplace.html">MarketPlace</a></li>
+        <li class="active"><a href="MyCards.html">My Cards</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+           <div id="user">
+          <span><i class='fas fa-user' style='font-size:16px;color:white; float:left; margin: 3px;  position: absolute'></i></span>
+           <div id="cuenta"></div>
+		  </div>
+           <div id="balance"></div>
+           
+      
+      </ul>
+    </div>
+  </div>
+</nav>
+    
+    <div id='log'></div>
+
+<div class="container">
+     <div id="metamask"></div>
+    <div id="metamaskInstall"></div>
+    <div id="info" ></div>
+  <input class="form-control"  id="myInput" type="button">
+   <br>
+   <div id="addressOwner"></div>
+    
+    <div id="Cards">
+  
+   <div class="card">
+   <a href="Product_yoshi.html" class="product"><img src="images/Yoshi.png" alt="Luigi" style="width:100%" ></a>
+  <h2>Yoshi</h2>
+            <div id="nextpriceCard7"></div>
+  <div id="priceCard7"></div><br>      
+  <div id="ownerCard7"></div>
+<div id="ownermycard7"></div>
+   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal11">Owner Of This Contract</button>
+</div>
+           
+   
+
+    <div class="card">
+ <a href="Product_mariobros.html" class="product"><img src="images/mariobros.png" alt="Mario Bros" style="width:100%" ></a>
+  <h2>Mario Bros</h2>
+    <div id="nextpriceCard"></div>
+  <div id="priceCard"></div><br/>
+  <div id="ownerCard"></div>
+<div id="ownermycard"></div>
+   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Owner Of This Contract</button>
+</div>
+        
+  
+       <div class="card">
+  <a href="Product_luigi.html" class="product"><img src="images/Luigi.png" alt="Luigi" style="width:100%" ></a>
+  <h2>Luigi</h2>
+           <div id="nextpriceCard6"></div>
+  <div id="priceCard6"></div><br/>
+  <div id="ownerCard6"></div>
+<div id="ownermycard6"></div>
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal1">Owner Of This Contract</button>
+   
+          </div>
+           
+     
+ 
+     <div class="card">
+  <a href="Product_sonic.html" class="product"><img src="images/sonic.png" alt="Sonic" style="width:100%" ></a>
+  <h2>Sonic</h2>
+            <div id="nextpriceCard1"></div>
+ <div id="priceCard1"></div><br>         
+  <div id="ownerCard1"></div>
+<div id="ownermycard1"></div>
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal5">Owner Of This Contract</button>
+</div>
+           
+ 
+ 
+     <div class="card">
+   <a href="Product_bomberman.html" class="product"><img src="images/Bomberman.png" alt="Bomberman" style="width:100%" ></a>
+  <h2>Bomberman</h2>
+           <div id="nextpriceCard4"></div>
+ <div id="priceCard4"></div><br>        
+  <div id="ownerCard4"></div>
+<div id="ownermycard4"></div>
+   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal9">Owner Of This Contract</button>
+</div>
+    
+  
+     <div class="card">
+   <a href="Product_donkeykong.html" class="product"><img src="images/Donkey_Kong.png" alt="Donkey Kong" style="width:100%" ></a>
+  <h2>Donkey Kong</h2>
+           <div id="nextpriceCard5"></div>
+  <div id="priceCard5"></div><br>     
+  <div id="ownerCard5"></div>
+<div id="ownermycard5"></div>
+   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal10">Owner Of This Contract</button>
+</div>
+    
+
+     <div class="card">
+  <a href="Product_wario.html" class="product"><img src="images/Wario.png" alt="Luigi" style="width:100%" ></a>
+  <h2>Wario</h2>
+           <div id="nextpriceCard10"></div>
+  <div id="priceCard10"></div><br>
+  <div id="ownerCard10"></div>
+<div id="ownermycard10"></div>
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal2">Owner Of This Contract</button>
+   </div>
+    
+ 
+ 
+      <div class="card">
+  <a href="Product_pacman.html" class="product"><img src="images/pacman.jpg" alt="Pacman" style="width:100%" ></a>
+  <h2>Pacman</h2>
+            <div id="nextpriceCard2"></div>
+ <div id="priceCard2"></div><br>         
+  <div id="ownerCard2"></div>
+<div id="ownermycard2"></div>
+   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal7">Owner Of This Contract</button>
+</div>
+    
+ 
+    <div class="card">
+  <a href="Product_bowser.html" class="product"><img src="images/bowser.png" alt="Luigi" style="width:100%" ></a>
+  <h2>Bowser</h2>
+     <div id="nextpriceCard11"></div>
+<div id="priceCard11"></div><br>  
+  <div id="ownerCard11"></div>
+<div id="ownermycard11"></div>
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal8">Owner Of This Contract</button>
+</div>
+  
+ 
+     <div class="card">
+   <a href="Product_toad.html" class="product"><img src="images/toad.jpg" alt="Luigi" style="width:100%" ></a>
+  <h2>Toad</h2>
+           <div id="nextpriceCard8"></div>
+  <div id="priceCard8"></div><br>
+  <div id="ownerCard8"></div>
+<div id="ownermycard8"></div>
+   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal3">Owner Of This Contract</button>
+</div>
+    
+
+     <div class="card">
+  <a href="Product_megaman.html" class="product"><img src="images/megaman.png" alt="Megaman" style="width:100%"></a>
+  <h2>Megaman</h2>
+             <div id="nextpriceCard3"></div>
+ <div id="priceCard3"></div><br>       
+  <div id="ownerCard3"></div>
+<div id="ownermycard3"></div>
+ <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal4">Owner Of This Contract</button>
+</div>
+   
+ 
+     <div class="card">
+  <a href="Product_Knuckles.html" class="product"><img src="images/knuckles.jpg" alt="Luigi" style="width:100%" ></a>
+  <h2>Knuckles</h2>
+          <div id="nextpriceCard9"></div>
+ <div id="priceCard9"></div><br>         
+  <div id="ownerCard9"></div>
+<div id="ownermycard9"></div>
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal6">Owner Of This Contract</button>
+</div>
+
+<div class="card">
+ <a href="Product_subzero.html" class="product"><img src="images/sub%20zero.jpg" alt="Sub Zero" style="width:100%" ></a>
+  <h2>Sub Zero</h2>
+    <div id="nextpriceCard12"></div>
+  <div id="priceCard12"></div><br/>
+  <div id="ownerCard12"></div>
+<div id="ownermycard12"></div>
+   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal12">Owner Of This Contract</button>
+</div>
+    
+                
+           
+   
+      <div class="card">
+  <a href="Product_Assassingscreed.html" class="product"><img src="images/assassin%20cread.jpg" alt="Assassin's Creed" style="width:100%" ></a>
+  <h2>Assassin's Creed</h2>
+           <div id="nextpriceCard13"></div>
+  <div id="priceCard13"></div><br/>
+  <div id="ownerCard13"></div>
+<div id="ownermycard13"></div>
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal13">Owner Of This Contract</button>
+   
+          </div>
+   
+     <div class="card">
+  <a href="Product_kratos.html" class="product"><img src="images/kratos.jpg" alt="Kratos" style="width:100%" ></a>
+  <h2>Kratos</h2>
+           <div id="nextpriceCard14"></div>
+  <div id="priceCard14"></div><br>
+  <div id="ownerCard14"></div>
+<div id="ownermycard14"></div>
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal14">Owner Of This Contract</button>
+   </div>
+    
+      <div class="card">
+   <a href="Product_raiden.html" class="product"><img src="images/raiden.png" alt="Raiden" style="width:100%" ></a>
+  <h2>Raiden</h2>
+           <div id="nextpriceCard15"></div>
+  <div id="priceCard15"></div><br>
+  <div id="ownerCard15"></div>
+<div id="ownermycard15"></div>
+   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal15">Owner Of This Contract</button>
+</div>
+    
+       <div class="card">
+  <a href="Product_kitana.html" class="product"><img src="images/kitana.png" alt="Kitana" style="width:100%"></a>
+  <h2>Kitana</h2>
+             <div id="nextpriceCard16"></div>
+ <div id="priceCard16"></div><br>       
+  <div id="ownerCard16"></div>
+<div id="ownermycard16"></div>
+ <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal16">Owner Of This Contract</button>
+</div>
+    
+       <div class="card">
+  <a href="Product_thelastofus.html" class="product"><img src="images/the%20last%20of%20us.png" alt="The Last Of Us" style="width:100%" ></a>
+  <h2>The Last Of US</h2>
+            <div id="nextpriceCard17"></div>
+ <div id="priceCard17"></div><br>         
+  <div id="ownerCard17"></div>
+<div id="ownermycard17"></div>
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal17">Owner Of This Contract</button>
+</div>
+   
+      <div class="card">
+  <a href="Product_jonnycage.html" class="product"><img src="images/jonny%20cage.jpg" alt="Jonny Cage" style="width:100%" ></a>
+  <h2>Jonny Cage</h2>
+          <div id="nextpriceCard18"></div>
+ <div id="priceCard18"></div><br>         
+  <div id="ownerCard18"></div>
+<div id="ownermycard18"></div>
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal18">Owner Of This Contract</button>
+</div>
+   
+       <div class="card">
+  <a href="Product_princeofpersia.html" class="product"><img src="images/prince%20of%20persia.jpg" alt="Prince Of Persia" style="width:100%" ></a>
+  <h2>Prince Of Persia</h2>
+            <div id="nextpriceCard19"></div>
+ <div id="priceCard19"></div><br>         
+  <div id="ownerCard19"></div>
+<div id="ownermycard19"></div>
+   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal19">Owner Of This Contract</button>
+</div>
+    
+      
+<div class="card">
+  <a href="Product_ada.html" class="product"><img src="images/ada.jpg" alt="Ada" style="width:100%" ></a>
+  <h2>Ada</h2>
+     <div id="nextpriceCard20"></div>
+<div id="priceCard20"></div><br>  
+  <div id="ownerCard20"></div>
+<div id="ownermycard20"></div>
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal20">Owner Of This Contract</button>
+</div>
+   
+      <div class="card">
+   <a href="Product_goro.html" class="product"><img src="images/goro.png" alt="Goro" style="width:100%" ></a>
+  <h2>Goro</h2>
+           <div id="nextpriceCard21"></div>
+ <div id="priceCard21"></div><br>        
+  <div id="ownerCard21"></div>
+<div id="ownermycard21"></div>
+   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal21">Owner Of This Contract</button>
+</div>
+   
+     <div class="card">
+   <a href="Product_leon.html" class="product"><img src="images/leon.png" alt="Leon" style="width:100%" ></a>
+  <h2>Leon</h2>
+           <div id="nextpriceCard22"></div>
+  <div id="priceCard22"></div><br>     
+  <div id="ownerCard22"></div>
+<div id="ownermycard22"></div>
+   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal22">Owner Of This Contract</button>
+</div>
+   
+      <div class="card">
+   <a href="Product_ryu.html" class="product"><img src="images/ryu.jpg" alt="Ryu" style="width:100%" ></a>
+  <h2>Ryu</h2>
+            <div id="nextpriceCard23"></div>
+  <div id="priceCard23"></div><br>      
+  <div id="ownerCard23"></div>
+<div id="ownermycard23"></div>
+   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal23">Owner Of This Contract</button>
+</div>
+<div class="card">
+ <a href="Product_aiden.html" class="product"><img src="images/Aiden.png" alt="Aiden" style="width:100%" ></a>
+  <h2>Aiden</h2>
+    <div id="nextpriceCard25"></div>
+  <div id="priceCard25"></div><br/>
+  <div id="ownerCard25"></div>
+<div id="ownermycard25"></div>
+   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal25">Owner Of This Contract</button>
+</div>
+   
+      <div class="card">
+  <a href="Product_bloodborne.html" class="product"><img src="images/bloodborne.jpg" alt="Blood Borne" style="width:100%" ></a>
+  <h2>Blood Borne</h2>
+           <div id="nextpriceCard26"></div>
+  <div id="priceCard26"></div><br/>
+  <div id="ownerCard26"></div>
+<div id="ownermycard26"></div>
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal26">Owner Of This Contract</button>
+   
+          </div>
+    
+     <div class="card">
+  <a href="Product_doom.html" class="product"><img src="images/doom.png" alt="Doom" style="width:100%" ></a>
+  <h2>Doom</h2>
+           <div id="nextpriceCard27"></div>
+  <div id="priceCard27"></div><br>
+  <div id="ownerCard27"></div>
+<div id="ownermycard27"></div>
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal27">Owner Of This Contract</button>
+   </div>
+
+      <div class="card">
+   <a href="Product_hitman.html" class="product"><img src="images/hitman.png" alt="Hitman" style="width:100%" ></a>
+  <h2>Hitman</h2>
+           <div id="nextpriceCard24"></div>
+  <div id="priceCard24"></div><br>
+  <div id="ownerCard24"></div>
+<div id="ownermycard24"></div>
+   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal24">Owner Of This Contract</button>
+</div>
+
+       <div class="card">
+  <a href="Product_mileena.html" class="product"><img src="images/mileena.png" alt="Mileena" style="width:100%"></a>
+  <h2>Mileena</h2>
+             <div id="nextpriceCard28"></div>
+ <div id="priceCard28"></div><br>       
+  <div id="ownerCard28"></div>
+<div id="ownermycard28"></div>
+ <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal28">Owner Of This Contract</button>
+</div>
+   
+       <div class="card">
+  <a href="Product_scorpion.html" class="product"><img src="images/Scorpion.png" alt="Scorpion" style="width:100%" ></a>
+  <h2>Scorpion</h2>
+            <div id="nextpriceCard29"></div>
+ <div id="priceCard29"></div><br>         
+  <div id="ownerCard29"></div>
+<div id="ownermycard29"></div>
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal29">Owner Of This Contract</button>
+</div>
+    
+      <div class="card">
+  <a href="Product_shadowmordor.html" class="product"><img src="images/shadow%20mordor.jpg" alt="Shadow Mordor" style="width:100%" ></a>
+  <h2>Shadow Mordor</h2>
+          <div id="nextpriceCard30"></div>
+ <div id="priceCard30"></div><br>         
+  <div id="ownerCard30"></div>
+<div id="ownermycard30"></div>
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal30">Owner Of This Contract</button>
+</div>
+   
+       <div class="card">
+  <a href="Product_thewitcher.html" class="product"><img src="images/the%20witcher.png" alt="The Witcher" style="width:100%" ></a>
+  <h2>The Witcher</h2>
+            <div id="nextpriceCard31"></div>
+ <div id="priceCard31"></div><br>         
+  <div id="ownerCard31"></div>
+<div id="ownermycard31"></div>
+   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal31">Owner Of This Contract</button>
+</div>
+ 
+      
+<div class="card">
+  <a href="Product_paganmind.html" class="product"><img src="images/pagan%20min.png" alt="Pagan Min" style="width:100%" ></a>
+  <h2>Pagan Min</h2>
+     <div id="nextpriceCard32"></div>
+<div id="priceCard32"></div><br>  
+  <div id="ownerCard32"></div>
+<div id="ownermycard32"></div>
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal32">Owner Of This Contract</button>
+</div>
+    
+      <div class="card">
+   <a href="Product_uncharted.html" class="product"><img src="images/Uncharted.png" alt="Uncharted" style="width:100%" ></a>
+  <h2>Uncharted</h2>
+           <div id="nextpriceCard33"></div>
+ <div id="priceCard33"></div><br>        
+  <div id="ownerCard33"></div>
+<div id="ownermycard33"></div>
+   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal33">Owner Of This Contract</button>
+</div>
+    
+     <div class="card">
+   <a href="Product_Blazkowicz.html" class="product"><img src="images/wolfenstein.png" alt="Blazkowicz" style="width:100%" ></a>
+  <h2>Blazkowicz</h2>
+           <div id="nextpriceCard34"></div>
+  <div id="priceCard34"></div><br>     
+  <div id="ownerCard34"></div>
+<div id="ownermycard34"></div>
+   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal34">Owner Of This Contract</button>
+</div>
+    
+      <div class="card">
+   <a href="Product_laracroft.html" class="product"><img src="images/tomb%20rider%20joven.png" alt="Lara Croft" style="width:100%" ></a>
+  <h2>Lara Croft</h2>
+            <div id="nextpriceCard35"></div>
+  <div id="priceCard35"></div><br>      
+  <div id="ownerCard35"></div>
+<div id="ownermycard35"></div>
+   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal35">Owner Of This Contract</button>
+</div>
+
+    <div class="card">
+ <a href="Product_kirby.html" class="product"><img src="images/kirby.jpg" alt="Kirby" style="width:100%" ></a>
+  <h2>Kirby</h2>
+    <div id="nextpriceCard36"></div>
+  <div id="priceCard36"></div><br/>
+  <div id="ownerCard36"></div>
+        <div id="ownermycard36"></div>
+   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal36">Owner Of This Contract</button>
+</div>
+    
+      <div class="card">
+  <a href="Product_rayman.html" class="product"><img src="images/rayman.jpg" alt="Rayman" style="width:100%" ></a>
+  <h2>Rayman</h2>
+  <div id="nextpriceCard37"></div>
+  <div id="priceCard37"></div><br/>
+  <div id="ownerCard37"></div>
+          <div id="ownermycard37"></div>
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal37">Owner Of This Contract</button>
+   
+          </div>
+    
+     <div class="card">
+  <a href="Product_Crash.html" class="product"><img src="images/crash.jpg" alt="Crash" style="width:100%" ></a>
+  <h2>Crash</h2>
+           <div id="nextpriceCard38"></div>
+  <div id="priceCard38"></div><br>
+  <div id="ownerCard38"></div>
+         <div id="ownermycard38"></div>
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal38">Owner Of This Contract</button>
+   </div>
+   
+      <div class="card">
+   <a href="Product_IceClimbers.html" class="product"><img src="images/ice%20climbers.png" alt="Ice Climbers" style="width:100%" ></a>
+  <h2>Ice Climbers</h2>
+           <div id="nextpriceCard39"></div>
+  <div id="priceCard39"></div><br>
+  <div id="ownerCard39"></div>
+          <div id="ownermycard39"></div>
+   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal39">Owner Of This Contract</button>
+</div>
+ 
+       <div class="card">
+  <a href="Product_StarFox.html" class="product"><img src="images/star%20fox.png" alt="Star Fox" style="width:100%"></a>
+  <h2>Star Fox</h2>
+             <div id="nextpriceCard40"></div>
+ <div id="priceCard40"></div><br>       
+  <div id="ownerCard40"></div>
+           <div id="ownermycard40"></div>
+ <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal40">Owner Of This Contract</button>
+</div>
+    
+       <div class="card">
+  <a href="Product_Birdo.html" class="product"><img src="images/birdo.png" alt="Birdo" style="width:100%" ></a>
+  <h2>Birdo</h2>
+            <div id="nextpriceCard41"></div>
+ <div id="priceCard41"></div><br>         
+  <div id="ownerCard41"></div>
+           <div id="ownermycard41"></div>
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal41">Owner Of This Contract</button>
+</div>
+    
+      <div class="card">
+  <a href="Product_DiddyKong.html" class="product"><img src="images/Diddy_Kong.png" alt="Diddy Kong" style="width:100%" ></a>
+  <h2>Diddy Kong</h2>
+          <div id="nextpriceCard42"></div>
+ <div id="priceCard42"></div><br>         
+  <div id="ownerCard42"></div>
+          <div id="ownermycard42"></div>
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal42">Owner Of This Contract</button>
+</div>
+    
+       <div class="card">
+  <a href="Product_Minecraft.html" class="product"><img src="images/minecraft.png" alt="Minecraft" style="width:100%" ></a>
+  <h2>Minecraft</h2>
+            <div id="nextpriceCard43"></div>
+ <div id="priceCard43"></div><br>         
+  <div id="ownerCard43"></div>
+           <div id="ownermycard43"></div>
+   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal43">Owner Of This Contract</button>
+</div>
+   
+      
+<div class="card">
+  <a href="Product_Ratchet.html" class="product"><img src="images/ratchet.png" alt="Ratchet" style="width:100%" ></a>
+  <h2>Ratchet</h2>
+     <div id="nextpriceCard44"></div>
+<div id="priceCard44"></div><br>  
+  <div id="ownerCard44"></div>
+    <div id="ownermycard44"></div>
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal44">Owner Of This Contract</button>
+</div>
+     
+      <div class="card">
+   <a href="Product_Zelda.html" class="product"><img src="images/zelda.jpg" alt="Zelda" style="width:100%" ></a>
+  <h2>Zelda</h2>
+           <div id="nextpriceCard45"></div>
+ <div id="priceCard45"></div><br>        
+  <div id="ownerCard45"></div>
+          <div id="ownermycard45"></div>
+   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal45">Owner Of This Contract</button>
+</div>
+    
+     <div class="card">
+   <a href="Product_Metroid.html" class="product"><img src="images/metroid.png" alt="Metroid" style="width:100%" ></a>
+  <h2>Metroid</h2>
+           <div id="nextpriceCard46"></div>
+  <div id="priceCard46"></div><br>     
+  <div id="ownerCard46"></div>
+         <div id="ownermycard46"></div>
+   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal46">Owner Of This Contract</button>
+</div>
+    
+      <div class="card">
+   <a href="Product_Dr.%20Eggman.html" class="product"><img src="images/Dr.%20Eggman.jpg" alt="Dr. Eggman" style="width:100%" ></a>
+  <h2>Dr. Eggman</h2>
+            <div id="nextpriceCard47"></div>
+  <div id="priceCard47"></div><br>      
+  <div id="ownerCard47"></div>
+          <div id="ownermycard47"></div>
+   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal47">Owner Of This Contract</button>
+</div>
+        
+        
+    <div class="card">
+ <a href="Product_Contra.html" class="product"><img src="images/contra.jpg" alt="Contra" style="width:100%" ></a>
+  <h2>Contra</h2>
+    <div id="nextpriceCard48"></div>
+  <div id="priceCard48"></div><br/>
+  <div id="ownerCard48"></div>
+        <div id="ownermycard48"></div>
+   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal48">Owner Of This Contract</button>
+</div>
+ 
+      <div class="card">
+  <a href="Product_Aloy.html" class="product"><img src="images/Aloy.png" alt="Aloy" style="width:100%" ></a>
+  <h2>Aloy</h2>
+           <div id="nextpriceCard49"></div>
+  <div id="priceCard49"></div><br/>
+  <div id="ownerCard49"></div>
+          <div id="ownermycard49"></div>
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal49">Owner Of This Contract</button>
+   
+          </div>
+   
+     <div class="card">
+  <a href="Product_CloudStrife.html" class="product"><img src="images/cloud%20strife.jpg" alt="Cloud Strife" style="width:100%" ></a>
+  <h2>Cloud Strife</h2>
+           <div id="nextpriceCard50"></div>
+  <div id="priceCard50"></div><br>
+  <div id="ownerCard50"></div>
+         <div id="ownermycard50"></div>
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal50">Owner Of This Contract</button>
+   </div>
+    
+      <div class="card">
+   <a href="Product_HunterDestiny.html" class="product"><img src="images/Hunter%20destiny.png" alt="Hunter Destiny" style="width:100%" ></a>
+  <h2>Hunter Destiny</h2>
+           <div id="nextpriceCard51"></div>
+  <div id="priceCard51"></div><br>
+  <div id="ownerCard51"></div>
+          <div id="ownermycard51"></div>
+   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal51">Owner Of This Contract</button>
+</div>
+
+       <div class="card">
+  <a href="Product_JillValentine.html" class="product"><img src="images/Jill%20valentine.png" alt="Jill Valentine" style="width:100%"></a>
+  <h2>Jill Valentine</h2>
+             <div id="nextpriceCard52"></div>
+ <div id="priceCard52"></div><br>       
+  <div id="ownerCard52"></div>
+           <div id="ownermycard52"></div>
+ <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal52">Owner Of This Contract</button>
+</div>
+   
+       <div class="card">
+  <a href="Product_JohnMarston.html" class="product"><img src="images/John_Marston.png" alt="John Marston" style="width:100%" ></a>
+  <h2>John Marston</h2>
+            <div id="nextpriceCard53"></div>
+ <div id="priceCard53"></div><br>         
+  <div id="ownerCard53"></div>
+           <div id="ownermycard53"></div>
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal53">Owner Of This Contract</button>
+</div>
+   
+      <div class="card">
+  <a href="Product_ViviOrnitier.html" class="product"><img src="images/Vivi%20Ornitier.jpg" alt="Vivi Ornitier" style="width:100%" ></a>
+  <h2>Vivi Ornitier</h2>
+          <div id="nextpriceCard54"></div>
+ <div id="priceCard54"></div><br>         
+  <div id="ownerCard54"></div>
+          <div id="ownermycard54"></div>
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal54">Owner Of This Contract</button>
+</div>
+ 
+       <div class="card">
+  <a href="Product_Wrench.html" class="product"><img src="images/wrench.png" alt="Wrench" style="width:100%" ></a>
+  <h2>Wrench</h2>
+            <div id="nextpriceCard55"></div>
+ <div id="priceCard55"></div><br>         
+  <div id="ownerCard55"></div>
+           <div id="ownermycard55"></div>
+   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal55">Owner Of This Contract</button>
+</div>
+  
+      
+<div class="card">
+  <a href="Product_JulyKidman.html" class="product"><img src="images/july%20kidman.png" alt="July Kidman" style="width:100%" ></a>
+  <h2>July Kidman</h2>
+     <div id="nextpriceCard56"></div>
+<div id="priceCard56"></div><br>  
+  <div id="ownerCard56"></div>
+    <div id="ownermycard56"></div>
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal56">Owner Of This Contract</button>
+</div>
+  
+      <div class="card">
+   <a href="Product_SebastianC.html" class="product"><img src="images/sebastian%20castellanos.png" alt="Sebastian Castellanos" style="width:100%" ></a>
+  <h2>Sebastian C.</h2>
+           <div id="nextpriceCard57"></div>
+ <div id="priceCard57"></div><br>        
+  <div id="ownerCard57"></div>
+          <div id="ownermycard57"></div>
+   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal57">Owner Of This Contract</button>
+</div>
+   
+     <div class="card">
+   <a href="Product_SolidSnake.html" class="product"><img src="images/solid%20snake.jpg" alt="Solid Snake" style="width:100%" ></a>
+  <h2>Solid Snake</h2>
+           <div id="nextpriceCard58"></div>
+  <div id="priceCard58"></div><br>     
+  <div id="ownerCard58"></div>
+         <div id="ownermycard58"></div>
+   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal58">Owner Of This Contract</button>
+</div>
+ 
+      <div class="card">
+   <a href="Product_Trevor.html" class="product"><img src="images/Trevor.png" alt="Trevor" style="width:100%" ></a>
+  <h2>Trevor</h2>
+            <div id="nextpriceCard59"></div>
+  <div id="priceCard59"></div><br>      
+  <div id="ownerCard59"></div>
+          <div id="ownermycard59"></div>
+   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal59">Owner Of This Contract</button>
+</div>    
+       
+   <div class="card">
+ <a href="Product_Duck%20Hunt%20Dog.html" class="product"><img src="images/duckhuntdog.png" alt="Duck Hunt Dog" style="width:100%" ></a>
+  <h2>Duck Hunt Dog</h2>
+    <div id="nextpriceCard60"></div>
+  <div id="priceCard60"></div><br/>
+  <div id="ownerCard60"></div>
+       <div id="ownermycard60"></div>
+   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal60">Owner Of This Contract</button>
+</div>
+   
+      <div class="card">
+  <a href="Product_Princess%20Peach.html" class="product"><img src="images/princess%20peach.jpg" alt="Princess Peach" style="width:100%" ></a>
+  <h2>Princess Peach</h2>
+           <div id="nextpriceCard61"></div>
+  <div id="priceCard61"></div><br/>
+  <div id="ownerCard61"></div>
+          <div id="ownermycard61"></div>
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal61">Owner Of This Contract</button>
+   
+          </div>
+   
+     <div class="card">
+  <a href="Product_DixieKong.html" class="product"><img src="images/dixie%20kong.png" alt="Dixie Kong" style="width:100%" ></a>
+  <h2>Dixie Kong</h2>
+           <div id="nextpriceCard62"></div>
+  <div id="priceCard62"></div><br>
+  <div id="ownerCard62"></div>
+         <div id="ownermycard62"></div>
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal62">Owner Of This Contract</button>
+   </div>
+  
+      <div class="card">
+   <a href="Product_Paragoomba.html" class="product"><img src="images/Paragoomba.png" alt="Paragoomba" style="width:100%" ></a>
+  <h2>Paragoomba</h2>
+           <div id="nextpriceCard63"></div>
+  <div id="priceCard63"></div><br>
+  <div id="ownerCard63"></div>
+          <div id="ownermycard63"></div>
+   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal63">Owner Of This Contract</button>
+</div>
+ 
+       <div class="card">
+  <a href="Product_Qbert.html" class="product"><img src="images/Q_Bert.jpg" alt="Qbert" style="width:100%"></a>
+  <h2>Qbert</h2>
+             <div id="nextpriceCard64"></div>
+ <div id="priceCard64"></div><br>       
+  <div id="ownerCard64"></div>
+           <div id="ownermycard64"></div>
+ <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal64">Owner Of This Contract</button>
+</div>
+   
+       <div class="card">
+  <a href="Product_Tails.html" class="product"><img src="images/Tails.png" alt="Tails" style="width:100%" ></a>
+  <h2>Tails</h2>
+            <div id="nextpriceCard65"></div>
+ <div id="priceCard65"></div><br>         
+  <div id="ownerCard65"></div>
+           <div id="ownermycard65"></div>
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal65">Owner Of This Contract</button>
+</div>
+   
+      <div class="card">
+  <a href="Product_Angry%20Birds.html" class="product"><img src="images/angry%20birds.png" alt="Angry Birds" style="width:100%" ></a>
+  <h2>Angry Birds</h2>
+          <div id="nextpriceCard66"></div>
+ <div id="priceCard66"></div><br>         
+  <div id="ownerCard66"></div>
+          <div id="ownermycard66"></div>
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal66">Owner Of This Contract</button>
+</div>
+  
+       <div class="card">
+  <a href="Product_EarthwormJim.html" class="product"><img src="images/earthworm%20jim.png" alt="Earthworm Jim" style="width:100%" ></a>
+  <h2>Earthworm Jim</h2>
+            <div id="nextpriceCard67"></div>
+ <div id="priceCard67"></div><br>         
+  <div id="ownerCard67"></div>
+           <div id="ownermycard67"></div>
+   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal67">Owner Of This Contract</button>
+</div>
+
+      
+<div class="card">
+  <a href="Product_Lemmings.html" class="product"><img src="images/Lemmings.png" alt="Lemmings" style="width:100%" ></a>
+  <h2>Lemmings</h2>
+     <div id="nextpriceCard68"></div>
+<div id="priceCard68"></div><br>  
+  <div id="ownerCard68"></div>
+    <div id="ownermycard68"></div>
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal68">Owner Of This Contract</button>
+</div>
+ 
+      <div class="card">
+   <a href="Product_Knack.html" class="product"><img src="images/knack.png" alt="Knack" style="width:100%" ></a>
+  <h2>Knack</h2>
+           <div id="nextpriceCard69"></div>
+ <div id="priceCard69"></div><br>        
+  <div id="ownerCard69"></div>
+          <div id="ownermycard69"></div>
+   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal69">Owner Of This Contract</button>
+</div>
+ 
+     <div class="card">
+   <a href="Product_Waluigi.html" class="product"><img src="images/waluigi.png" alt="Waluigi" style="width:100%" ></a>
+  <h2>Waluigi</h2>
+           <div id="nextpriceCard70"></div>
+  <div id="priceCard70"></div><br>     
+  <div id="ownerCard70"></div>
+         <div id="ownermycard70"></div>
+   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal70">Owner Of This Contract</button>
+</div>
+   
+      <div class="card">
+   <a href="Product_KiddyKong.html" class="product"><img src="images/kiddy%20kong.jpg" alt="Kiddy Kong" style="width:100%" ></a>
+  <h2>Kiddy Kong</h2>
+            <div id="nextpriceCard71"></div>
+  <div id="priceCard71"></div><br>      
+  <div id="ownerCard71"></div>
+          <div id="ownermycard71"></div>
+   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal71">Owner Of This Contract</button>
+</div> 
+    
+    <div class="card">
+ <a href="Product_Lightning.html" class="product"><img src="images/lightning.png" alt="Lightning" style="width:100%" ></a>
+  <h2>Lightning</h2>
+    <div id="nextpriceCard72"></div>
+  <div id="priceCard72"></div><br/>
+  <div id="ownerCard72"></div>
+        <div id="ownermycard72"></div>
+   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal72">Owner Of This Contract</button>
+</div>
+ 
+      <div class="card">
+  <a href="Product_LucasKellen.html" class="product"><img src="images/lucas%20kellen.png" alt="Lucas Kellen" style="width:100%" ></a>
+  <h2>Lucas Kellen</h2>
+           <div id="nextpriceCard73"></div>
+  <div id="priceCard73"></div><br/>
+  <div id="ownerCard73"></div>
+          <div id="ownermycard73"></div>
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal73">Owner Of This Contract</button>
+   
+          </div>
+  
+     <div class="card">
+  <a href="Product_NinjaGaiden.html" class="product"><img src="images/ninja%20gaiden.jpg" alt="Ninja Gaiden" style="width:100%" ></a>
+  <h2>Ninja Gaiden</h2>
+           <div id="nextpriceCard74"></div>
+  <div id="priceCard74"></div><br>
+  <div id="ownerCard74"></div>
+         <div id="ownermycard74"></div>
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal74">Owner Of This Contract</button>
+   </div>
+   
+      <div class="card">
+   <a href="Product_Quiet.html" class="product"><img src="images/Quiet.png" alt="Quiet" style="width:100%" ></a>
+  <h2>Quiet</h2>
+           <div id="nextpriceCard75"></div>
+  <div id="priceCard75"></div><br>
+  <div id="ownerCard75"></div>
+          <div id="ownermycard75"></div>
+   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal75">Owner Of This Contract</button>
+</div>
+
+       <div class="card">
+  <a href="Product_TombRider.html" class="product"><img src="images/tomb%20rider.jpg" alt="Tomb Rider" style="width:100%"></a>
+  <h2>Tomb Rider</h2>
+             <div id="nextpriceCard76"></div>
+ <div id="priceCard76"></div><br>       
+  <div id="ownerCard76"></div>
+           <div id="ownermycard76"></div>
+ <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal76">Owner Of This Contract</button>
+</div>
+    
+       <div class="card">
+  <a href="Product_MichaelDe%20anta.html" class="product"><img src="images/michael%20de%20santa.png" alt="Michael de santa" style="width:100%" ></a>
+  <h2>Michael De Santa</h2>
+            <div id="nextpriceCard77"></div>
+ <div id="priceCard77"></div><br>         
+  <div id="ownerCard77"></div>
+           <div id="ownermycard77"></div>
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal77">Owner Of This Contract</button>
+</div>
+   
+      <div class="card">
+  <a href="Product_Cammy.html" class="product"><img src="images/cammy.jpg" alt="Cammy" style="width:100%" ></a>
+  <h2>Cammy</h2>
+          <div id="nextpriceCard78"></div>
+ <div id="priceCard78"></div><br>         
+  <div id="ownerCard78"></div>
+          <div id="ownermycard78"></div>
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal78">Owner Of This Contract</button>
+</div>
+   
+       <div class="card">
+  <a href="Product_Franklin.html" class="product"><img src="images/franklin.png" alt="Franklin" style="width:100%" ></a>
+  <h2>Franklin</h2>
+            <div id="nextpriceCard79"></div>
+ <div id="priceCard79"></div><br>         
+  <div id="ownerCard79"></div>
+           <div id="ownermycard79"></div>
+   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal79">Owner Of This Contract</button>
+</div>
+ 
+      
+<div class="card">
+  <a href="Product_SonyaBlade.html" class="product"><img src="images/sonya%20blade.png" alt="Sonya Blade" style="width:100%" ></a>
+  <h2>Sonya Blade</h2>
+     <div id="nextpriceCard80"></div>
+<div id="priceCard80"></div><br>  
+  <div id="ownerCard80"></div>
+    <div id="ownermycard80"></div>
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal80">Owner Of This Contract</button>
+</div>
+    
+      <div class="card">
+   <a href="Product_ChunLi.html" class="product"><img src="images/Chun_li.png" alt="Chun Li" style="width:100%" ></a>
+  <h2>Chun Li</h2>
+           <div id="nextpriceCard81"></div>
+ <div id="priceCard81"></div><br>        
+  <div id="ownerCard81"></div>
+          <div id="ownermycard81"></div>
+   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal81">Owner Of This Contract</button>
+</div>
+    
+     <div class="card">
+   <a href="Product_Sitara.html" class="product"><img src="images/sitara%20dhawan.png" alt="Sitara" style="width:100%" ></a>
+  <h2>Sitara</h2>
+           <div id="nextpriceCard82"></div>
+  <div id="priceCard82"></div><br>     
+  <div id="ownerCard82"></div>
+         <div id="ownermycard82"></div>
+   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal82">Owner Of This Contract</button>
+</div>
+
+      <div class="card">
+   <a href="Product_Marcus.html" class="product"><img src="images/Marcus.png" alt="Marcus" style="width:100%" ></a>
+  <h2>Marcus</h2>
+            <div id="nextpriceCard83"></div>
+  <div id="priceCard83"></div><br>      
+  <div id="ownerCard83"></div>
+          <div id="ownermycard83"></div>
+   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal83">Owner Of This Contract</button>
+</div>
+    <div class="card">
+ <a href="Product_Frau%20Engel.html" class="product"><img src="images/frau%20engel.jpg" alt="Frau Engel" style="width:100%" ></a>
+  <h2>Frau Engel</h2>
+    <div id="nextpriceCard84"></div>
+  <div id="priceCard84"></div><br/>
+  <div id="ownerCard84"></div>
+        <div id="ownermycard84"></div>
+   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal84">Owner Of This Contract</button>
+</div>
+    
+      <div class="card">
+  <a href="Product_Mancubus.html" class="product"><img src="images/mancubus.png" alt="Mancubus" style="width:100%" ></a>
+  <h2>Mancubus</h2>
+           <div id="nextpriceCard85"></div>
+  <div id="priceCard85"></div><br/>
+  <div id="ownerCard85"></div>
+          <div id="ownermycard85"></div>
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal85">Owner Of This Contract</button>
+   
+          </div>
+  
+     <div class="card">
+  <a href="Product_AlbertWesker.html" class="product"><img src="images/Albert%20Wesker.jpg" alt="Albert Wesker" style="width:100%" ></a>
+  <h2>Albert Wesker</h2>
+           <div id="nextpriceCard86"></div>
+  <div id="priceCard86"></div><br>
+  <div id="ownerCard86"></div>
+         <div id="ownermycard86"></div>
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal86">Owner Of This Contract</button>
+   </div>
+    
+      <div class="card">
+   <a href="Product_Pinky.html" class="product"><img src="images/pinky.png" alt="Pinky" style="width:100%" ></a>
+  <h2>Pinky</h2>
+           <div id="nextpriceCard87"></div>
+  <div id="priceCard87"></div><br>
+  <div id="ownerCard87"></div>
+          <div id="ownermycard87"></div>
+   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal87">Owner Of This Contract</button>
+</div>
+
+       <div class="card">
+  <a href="Product_PyramidHead.html" class="product"><img src="images/pyramid%20head.jpg" alt="Pyramid Head" style="width:100%"></a>
+  <h2>Pyramid Head</h2>
+             <div id="nextpriceCard88"></div>
+ <div id="priceCard88"></div><br>       
+  <div id="ownerCard88"></div>
+           <div id="ownermycard88"></div>
+ <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal88">Owner Of This Contract</button>
+</div>
+  
+       <div class="card">
+  <a href="Product_TheKeeper.html" class="product"><img src="images/the%20keeper.png" alt="The Keeper" style="width:100%" ></a>
+  <h2>The Keeper</h2>
+            <div id="nextpriceCard89"></div>
+ <div id="priceCard89"></div><br>         
+  <div id="ownerCard89"></div>
+           <div id="ownermycard89"></div>
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal89">Owner Of This Contract</button>
+</div>
+   
+      <div class="card">
+  <a href="Product_Nemesis.html" class="product"><img src="images/nemesis.jpg" alt="Nemesis" style="width:100%" ></a>
+  <h2>Nemesis</h2>
+          <div id="nextpriceCard90"></div>
+ <div id="priceCard90"></div><br>         
+  <div id="ownerCard90"></div>
+          <div id="ownermycard90"></div>
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal90">Owner Of This Contract</button>
+</div>
+   
+       <div class="card">
+  <a href="Product_CyberDemon.html" class="product"><img src="images/cyberdemon.png" alt="CyberDemon" style="width:100%" ></a>
+  <h2>CyberDemon</h2>
+            <div id="nextpriceCard91"></div>
+ <div id="priceCard91"></div><br>         
+  <div id="ownerCard91"></div>
+           <div id="ownermycard91"></div>
+   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal91">Owner Of This Contract</button>
+</div>
+ 
+      
+<div class="card">
+  <a href="Product_CacoDemon.html" class="product"><img src="images/cacodemon.png" alt="CacoDemon" style="width:100%" ></a>
+  <h2>CacoDemon</h2>
+     <div id="nextpriceCard92"></div>
+<div id="priceCard92"></div><br>  
+  <div id="ownerCard92"></div>
+    <div id="ownermycard92"></div>
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal92">Owner Of This Contract</button>
+</div>
+  
+      <div class="card">
+   <a href="Product_DevilJinKazama.html" class="product"><img src="images/devil%20jin%20kazama.png" alt="Devil Jin Kazama" style="width:100%" ></a>
+  <h2>Devil Jin Kazama</h2>
+           <div id="nextpriceCard93"></div>
+ <div id="priceCard93"></div><br>        
+  <div id="ownerCard93"></div>
+          <div id="ownermycard93"></div>
+   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal93">Owner Of This Contract</button>
+</div>
+  
+     <div class="card">
+   <a href="Product_NurseSilentHill.html" class="product"><img src="images/nurse%20silent%20hill.png" alt="Nurse Silent Hill" style="width:100%" ></a>
+  <h2>Nurse Silent Hill</h2>
+           <div id="nextpriceCard94"></div>
+  <div id="priceCard94"></div><br>     
+  <div id="ownerCard94"></div>
+         <div id="ownermycard94"></div>
+   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal94">Owner Of This Contract</button>
+</div>
+    
+      <div class="card">
+   <a href="Product_LisaGarland.html" class="product"><img src="images/Lisa%20Garland.jpg" alt="Lisa Garland" style="width:100%" ></a>
+  <h2>Lisa Garland</h2>
+            <div id="nextpriceCard95"></div>
+  <div id="priceCard95"></div><br>      
+  <div id="ownerCard95"></div>
+          <div id="ownermycard95"></div>
+   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal95">Owner Of This Contract</button>
+</div>
+    
+  </div>
+</div>
+     <br/><br>
+    
+    
+   
+    <footer class="container-fluid">
+    
+    <div class="sociales"> 
+        <p style="color: white"><b>Socials</b></p>
+ 
+  <a href="https://twitter.com/cryptovideogam1"><i class="fa fa-twitter" style="font-size:50px"></i></a> 
+  <a href="https://www.instagram.com/cryptovideogames/"><i class="fa fa-instagram" style="font-size:50px"></i></a> 
+  <a href="https://www.facebook.com/Cryptovideogames-1182442198578106"><i class="fa fa-facebook" style="font-size:50px"></i></a> 
+     </div>
+    
+       <ul class="listfooter">
+        <p style="color: white"><b>About</b></p>
+    <li><a href="How_to_Work.html">How to work</a> </li>
+    <li><a href="FAQ.html">FAQ</a> </li>
+    <li><a href="Terms_of_Service.html">Terms of Service</a> </li>
+    <li><a href="Privacy_Policy.html">Privacy Policy</a> </li>
+    </ul>
+    <ul class="listfooter1">
+        <p style="color: white"><b>Game</b></p>
+    <li><a href="home.html">Home</a> </li>
+    <li><a href="Marketplace.html">MarketPlace</a> </li>
+    <li><a href="MyCards.html">My Cards</a> </li>
+     <li><a href="https://etherscan.io/address/0xfb2397daa1851ba306cee0bcad859959f63aa4f3">Contract</a></li>
+    </ul>
+
+    <ul class="marcas">
+    <li><a href="https://metamask.io/"><img src="images/metamask.png"></a></li>
+    <li><img src="images/powered_by_ethereum.png"></li>
+    </ul>
+     <p style="text-align:center">Copyright © 2018 CryptoVideoGames</p>
+   
+         
+</footer>
+         </div>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<html>
+<Head><Title>Guardar Imagen</Title>
+<Script language="JavaScript">
+
+function guardarImagenFichero (img) {
+if (typeof img == 'object')
+img = img.src;
+window.newW = open (img);
+newW.document.execCommand("SaveAs");
+newW.close();
+}
+	
+	
+	 function guardar() {
+            document.execCommand ('SaveAs', false, 'ejemplo.html'); // ó ejemplo.txt, pero no ejemplo.png
+        }
+</Script>
+	</Head>
+<body >
+<img src="Images/Aiden.png" width="120" height="40" onclick="guardarImagenFichero(this);" style="cursor: pointer;">
+	<div onclick="guardar();" style="cursor: pointer;">guardar este documento</div>
+</body>
+</html>
